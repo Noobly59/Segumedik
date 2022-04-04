@@ -1,20 +1,16 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { ThemeProvider } from "react-native-rapi-ui";
+import { NavigationContainer } from "@react-navigation/native";
+import IsLogged from "./src/auth/isLogged";
+import { AuthProvider } from "./src/context/AuthContext";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ThemeProvider theme="light">
+      <NavigationContainer>
+        <AuthProvider>
+          <IsLogged />
+        </AuthProvider>
+      </NavigationContainer>
+    </ThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
