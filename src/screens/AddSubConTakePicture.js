@@ -32,7 +32,7 @@ export default function AddSubConTakePicture() {
         />
       </View>
       <View>
-        {/* <Image
+        <Image
           source={require("../assets/extintor.jpg")}
           style={{
             width: "63.75%",
@@ -40,15 +40,15 @@ export default function AddSubConTakePicture() {
             alignSelf: "center",
             top: 7,
           }}
-        /> */}
-        <Camera
+        />
+        {/* <Camera
           style={{
             width: "75%",
             height: "75%",
             alignSelf: "center",
             top: 7,
           }}
-        ></Camera>
+        ></Camera> */}
       </View>
       <View style={styles.formButtons}>
         <View>
