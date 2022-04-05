@@ -1,10 +1,10 @@
 import { View, StyleSheet } from "react-native";
-import { Section, Text } from "react-native-rapi-ui";
+import { Section, Text, themeColor } from "react-native-rapi-ui";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 export default function SubConListItem(props) {
-  const { subConDetail } = props;
+  const { subConDetails } = props;
   const navigation = useNavigation();
   const goToDetail = () => {
     navigation.navigate("SubConDetail");
@@ -13,28 +13,34 @@ export default function SubConListItem(props) {
     <TouchableWithoutFeedback onPress={goToDetail}>
       <Section style={styles.itemContainer}>
         <View style={styles.container}>
-          <View style={styles.headquarters}>
+          {/* <View style={styles.headquarters}>
             <Text style={styles.title}>GYE</Text>
-          </View>
+          </View> */}
           <View style={styles.conditionInfo}>
             <View style={styles.infoText}>
               <View>
                 <Text style={styles.subConDetail}>21-03-2022</Text>
               </View>
               <View>
-                <Text style={styles.subConDetail} status={"warning"}>
-                  Corto plazo
+                <Text
+                  style={styles.subConDetail}
+                  status={subConDetails.termColor}
+                >
+                  {subConDetails.term}
                 </Text>
               </View>
             </View>
             <Text style={styles.subConDetail} numberOfLines={1}>
-              {`${subConDetail}`}
+              {`${subConDetails.text}`}
             </Text>
             <Text style={styles.subConDetail}>
               Diego Emilio Suárez Villagómez
             </Text>
-            <Text style={styles.subConDetail} status={"success"}>
-              Ejecutada
+            <Text
+              style={styles.subConDetail}
+              status={subConDetails.statusColor}
+            >
+              {subConDetails.status}
             </Text>
           </View>
         </View>
@@ -52,18 +58,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingVertical: 7,
   },
-  headquarters: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  title: {
-    fontSize: 15,
-    alignSelf: "center",
-  },
+  // headquarters: {
+  //   flex: 1,
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  // },
+  // title: {
+  //   fontSize: 15,
+  //   alignSelf: "center",
+  // },
   conditionInfo: {
     flex: 5,
-    paddingRight: 10,
+    paddingHorizontal: 10,
   },
   infoText: {
     flexDirection: "row",

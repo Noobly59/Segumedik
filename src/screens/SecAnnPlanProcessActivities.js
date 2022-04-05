@@ -7,20 +7,82 @@ import ProcessActProcessedList from "../components/ProcessActivities/ProcessActP
 
 export default function SecAnnPlanProcessActivities() {
   const pendingActivities = [
-    "Mapa de evacuacion elaboracion-publicacion. 01/01/2022",
-    "Mapa de riesgos elaboracion-publicacion. 01/01/2022",
-    "Charlas de seguridad y medio ambiente. 01/01/2022",
-    "Simulacro de evacuacion. 01/01/2022",
-    "Factores de riesgos (mecánico, físico, quimico, biologico, psicosocial, ergonomico). 01/01/2022",
-    "Índice de Capacitaciones (Entrenamientos) 01/01/2022",
+    {
+      id: "1",
+      actName: "Mapa de evacuacion elaboracion-publicacion.",
+      date: " 01/01/2022",
+      icon: "logo-tux",
+    },
+    {
+      id: "2",
+      actName: "Mapa de riesgos elaboracion-publicacion.",
+      date: " 01/01/2022",
+      icon: "logo-tux",
+    },
+    {
+      id: "3",
+      actName: "Charlas de seguridad y medio ambiente.",
+      date: " 01/01/2022",
+      icon: "logo-tux",
+    },
+    {
+      id: "4",
+      actName: "Simulacro de evacuacion.",
+      date: " 01/01/2022",
+      icon: "logo-tux",
+    },
+    {
+      id: "5",
+      actName:
+        "Factores de riesgos (mecánico, físico, quimico, biologico, psicosocial, ergonomico).",
+      date: " 01/01/2022",
+      icon: "logo-tux",
+    },
+    {
+      id: "6",
+      actName: "Índice de Capacitaciones (Entrenamientos).",
+      date: " 01/01/2022",
+      icon: "logo-tux",
+    },
   ];
   const processedActivities = [
-    "Mapa de evacuacion elaboracion-publicacion. 01/01/2022",
-    "Mapa de riesgos elaboracion-publicacion. 01/01/2022",
-    "Charlas de seguridad y medio ambiente. 01/01/2022",
-    "Simulacro de evacuacion. 01/01/2022",
-    "Factores de riesgos (mecánico, físico, quimico, biologico, psicosocial, ergonomico). 01/01/2022",
-    "Índice de Capacitaciones (Entrenamientos) 01/01/2022",
+    {
+      id: "1",
+      actName: "Mapa de evacuacion elaboracion-publicacion.",
+      date: " 01/01/2022",
+      icon: "logo-tux",
+    },
+    {
+      id: "2",
+      actName: "Mapa de riesgos elaboracion-publicacion.",
+      date: " 01/01/2022",
+      icon: "logo-tux",
+    },
+    {
+      id: "3",
+      actName: "Charlas de seguridad y medio ambiente.",
+      date: " 01/01/2022",
+      icon: "logo-tux",
+    },
+    {
+      id: "4",
+      actName: "Simulacro de evacuacion.",
+      date: " 01/01/2022",
+      icon: "logo-tux",
+    },
+    {
+      id: "5",
+      actName:
+        "Factores de riesgos (mecánico, físico, quimico, biologico, psicosocial, ergonomico).",
+      date: " 01/01/2022",
+      icon: "logo-tux",
+    },
+    {
+      id: "6",
+      actName: "Índice de Capacitaciones (Entrenamientos).",
+      date: " 01/01/2022",
+      icon: "logo-tux",
+    },
   ];
   return (
     <View

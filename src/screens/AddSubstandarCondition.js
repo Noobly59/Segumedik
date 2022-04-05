@@ -7,6 +7,7 @@ import {
   TextInput,
   themeColor,
   Button,
+  Section,
 } from "react-native-rapi-ui";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -56,18 +57,14 @@ export default function AddSubstandarCondition() {
     })();
   }, [formik.errors]);
 
-  const a = () => {
-    moment.updateLocale("es", {
-      months:
-        "Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre".split(
-          "_"
-        ),
-      monthsShort:
-        "Ene._Feb._Mar._Abr._May._Jun._Jul._Ago._Sep._Oct._Nov._Dic.".split(
-          "_"
-        ),
-    });
-  };
+  moment.updateLocale("es", {
+    months:
+      "Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre".split(
+        "_"
+      ),
+    monthsShort:
+      "Ene._Feb._Mar._Abr._May._Jun._Jul._Ago._Sep._Oct._Nov._Dic.".split("_"),
+  });
 
   return (
     <KeyboardAvoidingView
@@ -99,12 +96,13 @@ export default function AddSubstandarCondition() {
         </View>
         <View style={styles.formElement}>
           <Text style={styles.formLabel}>Fecha de detección:</Text>
-          <SimplerDatePicker
-            minDate={moment().subtract(1, "days")}
-            maxDate={moment().add(1, "days")}
-            onDatePicked={console.log}
-          />
-
+          <Section>
+            <SimplerDatePicker
+              onDatePicked={(date) =>
+                formik.setFieldValue("detectionDate", date)
+              }
+            />
+          </Section>
           {/* <TextInput
             value={formik.values.detectionDate}
             autoCapitalize="none"
@@ -160,10 +158,10 @@ export default function AddSubstandarCondition() {
             {/* <Button onPress={showDatepicker} title="Show date picker!" /> */}
 
             <Button
-              text="Continuar"
+              text="Guardar"
               type="TouchableOpacity"
-              // onPress={formik.handleSubmit}
-              onPress={a}
+              onPress={formik.handleSubmit}
+              // onPress={a}
               color={themeColor.primary600}
               rightContent={
                 <Ionicons

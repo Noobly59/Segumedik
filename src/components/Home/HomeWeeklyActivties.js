@@ -3,10 +3,13 @@ import { Text } from "react-native-rapi-ui";
 import HomeMenuActList from "./HomeMenuActList";
 
 export default function HomeWeeklyActivties(props) {
-  const { activities } = props;
+  const { activities, numAct } = props;
   return (
     <View style={styles.weeklyActivities}>
-      <Text style={styles.weeklyText}>Actividades Semanales</Text>
+      <View style={styles.monthlyCounter}>
+        <Text style={styles.weeklyText}>Actividades Planificadas del Mes</Text>
+        <Text style={styles.monthlyNumber}>{`${numAct} act. este mes`}</Text>
+      </View>
       {activities ? (
         <HomeMenuActList activities={activities} />
       ) : (
@@ -22,7 +25,18 @@ const styles = StyleSheet.create({
     marginTop: 5,
     flex: 1,
   },
+  monthlyCounter: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
   weeklyText: {
-    marginBottom: 12,
+    marginBottom: 7,
+    fontWeight: "bold",
+  },
+  monthlyNumber: {
+    marginBottom: 7,
+    fontWeight: "bold",
+    alignSelf: "center",
+    fontSize: 14,
   },
 });

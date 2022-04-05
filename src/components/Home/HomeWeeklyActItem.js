@@ -1,7 +1,13 @@
-import { StyleSheet } from "react-native";
-import { Section, SectionContent, Text } from "react-native-rapi-ui";
+import { StyleSheet, View } from "react-native";
+import {
+  Section,
+  SectionContent,
+  Text,
+  themeColor,
+} from "react-native-rapi-ui";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function HomeWeeklyActItem(props) {
   const { menuItemName } = props;
@@ -12,8 +18,27 @@ export default function HomeWeeklyActItem(props) {
   return (
     <TouchableWithoutFeedback onPress={goToSecAnnPlan}>
       <Section style={styles.container}>
-        <SectionContent>
-          <Text style={styles.title}>{menuItemName}</Text>
+        <SectionContent
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Ionicons
+            name={`${menuItemName.icon}`}
+            size={20}
+            color={themeColor.black}
+          />
+
+          <View style={{ flex: 1 }}>
+            <Text numberOfLines={1} style={styles.title}>
+              {menuItemName.actName}
+            </Text>
+          </View>
+          <View>
+            <Text style={styles.dates}>{menuItemName.date}</Text>
+          </View>
         </SectionContent>
       </Section>
     </TouchableWithoutFeedback>
@@ -25,6 +50,10 @@ const styles = StyleSheet.create({
     marginVertical: 7,
   },
   title: {
+    fontSize: 15,
+    textAlign: "left",
+  },
+  date: {
     fontSize: 15,
     textAlign: "center",
   },

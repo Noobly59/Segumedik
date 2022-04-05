@@ -1,11 +1,16 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { Section, SectionContent, Text } from "react-native-rapi-ui";
+import {
+  Section,
+  SectionContent,
+  Text,
+  themeColor,
+} from "react-native-rapi-ui";
 
 export default function SecAnnPlanDetHeader() {
   return (
     <Section style={styles.headerContainer}>
-      <SectionContent>
+      <SectionContent style={{ backgroundColor: themeColor.info }}>
         <View style={styles.textContainer}>
           <Text
             style={styles.text}

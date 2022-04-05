@@ -7,6 +7,8 @@ import {
   Button,
   themeColor,
 } from "react-native-rapi-ui";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function SubConDetHeader() {
   return (
@@ -23,7 +25,9 @@ export default function SubConDetHeader() {
           >{`Descripción: Extintor sin señalética cerca a la Sala de Sesiones 2`}</Text>
         </View>
         <View style={styles.buttonContainer}>
-          <Button text="Editar" color={themeColor.primary600} />
+          <TouchableOpacity style={styles.addButton}>
+            <Ionicons name="pencil" size={20} color={themeColor.white} />
+          </TouchableOpacity>
         </View>
       </SectionContent>
     </Section>
@@ -42,12 +46,20 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     justifyContent: "center",
-    flex: 1,
+    flex: 4,
   },
   text: {
     marginVertical: 4,
   },
   buttonContainer: {
+    justifyContent: "center",
+    flex: 1,
+  },
+  addButton: {
+    height: 50,
+    borderRadius: 10,
+    backgroundColor: themeColor.primary600,
+    alignItems: "center",
     justifyContent: "center",
   },
 });

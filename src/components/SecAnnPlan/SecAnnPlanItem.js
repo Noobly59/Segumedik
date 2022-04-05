@@ -14,14 +14,17 @@ export default function SecAnnPlanItem(props) {
     <TouchableWithoutFeedback onPress={goToDetail}>
       <Section style={styles.itemContainer}>
         <View style={styles.container}>
-          <View style={styles.headquarters}>
+          {/* <View style={styles.headquarters}>
             <Text style={styles.title}>GYE</Text>
-          </View>
+          </View> */}
           <View style={styles.conditionInfo}>
             <View style={styles.infoText}>
               <View>
-                <Text style={styles.secAnnPlanDetail}>
+                {/* <Text style={styles.secAnnPlanDetail}>
                   Empresa para pruebas
+                </Text> */}
+                <Text style={styles.secAnnPlanDetail} numberOfLines={1}>
+                  {`${secAnnPlanDetail}`}
                 </Text>
               </View>
               <View>
@@ -30,9 +33,7 @@ export default function SecAnnPlanItem(props) {
                 </Text>
               </View>
             </View>
-            <Text style={styles.secAnnPlanDetail} numberOfLines={1}>
-              {`${secAnnPlanDetail}`}
-            </Text>
+
             <Text style={styles.secAnnPlanDetail}>
               Diego Emilio Suárez Villagómez
             </Text>
@@ -63,7 +64,7 @@ const styles = StyleSheet.create({
   },
   conditionInfo: {
     flex: 5,
-    paddingRight: 10,
+    paddingHorizontal: 10,
   },
   infoText: {
     flexDirection: "row",

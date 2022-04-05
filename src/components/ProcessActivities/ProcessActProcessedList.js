@@ -12,8 +12,8 @@ export default function ProcessActProcessedList(props) {
       <ScrollView style={styles.itemContainer}>
         {processedActivities ? (
           map(processedActivities, (item, index) => (
-            <View style={styles.listItem}>
-              <ProcessActPendingListItem key={index} activityName={item} />
+            <View key={index} style={styles.listItem}>
+              <ProcessActPendingListItem activity={item} />
             </View>
           ))
         ) : (

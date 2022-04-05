@@ -8,6 +8,7 @@ export default function HomeMenuActList(props) {
       data={activities}
       numColumns={1}
       showsVerticalScrollIndicator={false}
+      keyExtractor={(activity) => String(activity.id)}
       renderItem={({ item }) => <HomeWeeklyActItem menuItemName={item} />}
       onEndReachedThreshold={0.1}
     />

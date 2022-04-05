@@ -18,8 +18,8 @@ export default function ProcessActPendingList(props) {
     <ScrollView style={styles.container}>
       {pendingActivities ? (
         map(pendingActivities, (item, index) => (
-          <View style={styles.listItem}>
-            <ProcessActPendingListItem key={index} activityName={item} />
+          <View key={index} style={styles.listItem}>
+            <ProcessActPendingListItem activity={item} />
           </View>
         ))
       ) : (

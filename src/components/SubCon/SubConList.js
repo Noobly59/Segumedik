@@ -12,7 +12,8 @@ export default function SubConList(props) {
           data={conditions}
           numColumns={1}
           showsVerticalScrollIndicator={true}
-          renderItem={({ item }) => <SubConListItem subConDetail={item} />}
+          keyExtractor={(subCon) => String(subCon.id)}
+          renderItem={({ item }) => <SubConListItem subConDetails={item} />}
           onEndReachedThreshold={0.1}
         />
       ) : (
