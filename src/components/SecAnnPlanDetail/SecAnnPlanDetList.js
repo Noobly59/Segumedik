@@ -1,24 +1,24 @@
 import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
-import { Text } from "react-native-rapi-ui";
+import { Text, themeColor } from "react-native-rapi-ui";
 import { map } from "lodash";
 import SecAnnPlanDetListItem from "./SecAnnPlanDetListItem";
 
 export default function SecAnnPlanDetList(props) {
   const { percentage } = props;
   const months = [
-    { id: "1", month: "Enero" },
-    { id: "2", month: "Febrero" },
-    { id: "3", month: "Marzo" },
-    { id: "4", month: "Abril" },
-    { id: "5", month: "Mayo" },
-    { id: "6", month: "Junio" },
-    { id: "7", month: "Julio" },
-    { id: "8", month: "Agosto" },
-    { id: "9", month: "Septiembre" },
-    { id: "10", month: "Octubre" },
-    { id: "11", month: "Noviembre" },
-    { id: "12", month: "Diciembre" },
+    { id: "1", month: "Enero", color: themeColor.warning },
+    { id: "2", month: "Febrero", color: themeColor.warning },
+    { id: "3", month: "Marzo", color: themeColor.warning },
+    { id: "4", month: "Abril", color: themeColor.white },
+    { id: "5", month: "Mayo", color: themeColor.white },
+    { id: "6", month: "Junio", color: themeColor.white },
+    { id: "7", month: "Julio", color: themeColor.white },
+    { id: "8", month: "Agosto", color: themeColor.white },
+    { id: "9", month: "Septiembre", color: themeColor.white },
+    { id: "10", month: "Octubre", color: themeColor.white },
+    { id: "11", month: "Noviembre", color: themeColor.white },
+    { id: "12", month: "Diciembre", color: themeColor.white },
   ];
   return (
     <ScrollView style={styles.listContainer}>
@@ -26,6 +26,7 @@ export default function SecAnnPlanDetList(props) {
         <SecAnnPlanDetListItem
           key={index}
           monthItem={item.month}
+          color={item.color}
           percentage={percentage}
         />
       ))}

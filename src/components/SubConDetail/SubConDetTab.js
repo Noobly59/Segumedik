@@ -7,20 +7,25 @@ import { StyleSheet } from "react-native";
 
 const Tab = createMaterialTopTabNavigator();
 
-export default function SubConDetTab() {
+export default function SubConDetTab(props) {
+  const { detectionDateAndEvidence, closingDateAndEvidence } = props;
   return (
     <Tab.Navigator style={styles.tabContainer}>
       <Tab.Screen
         name="DetectionTab"
         component={DetectionTab}
-        options={{ tabBarLabel: () => <Text>Detección</Text> }}
+        options={{
+          tabBarLabel: () => <Text style={{ fontSize: 20 }}>Detección</Text>,
+        }}
+        initialParams={{ detectionDateAndEvidence: detectionDateAndEvidence }}
       />
       <Tab.Screen
         name="ClosureTab"
         component={ClosureTab}
         options={{
-          tabBarLabel: () => <Text>Cierre</Text>,
+          tabBarLabel: () => <Text style={{ fontSize: 20 }}>Cierre</Text>,
         }}
+        initialParams={{ closingDateAndEvidence: closingDateAndEvidence }}
       />
     </Tab.Navigator>
   );

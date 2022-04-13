@@ -10,7 +10,8 @@ import {
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 
-export default function SubConDetHeader() {
+export default function SubConDetHeader(props) {
+  const { responsibleAndDesc } = props;
   return (
     <Section style={styles.headerContainer}>
       <SectionContent style={styles.rowContainer}>
@@ -18,15 +19,15 @@ export default function SubConDetHeader() {
           <Text
             numberOfLines={1}
             style={styles.text}
-          >{`Responsable: Gerencia`}</Text>
+          >{`Responsable: ${responsibleAndDesc.responsible}`}</Text>
           <Text
             numberOfLines={2}
             style={styles.text}
-          >{`Descripción: Extintor sin señalética cerca a la Sala de Sesiones 2`}</Text>
+          >{`Descripción: ${responsibleAndDesc.description}`}</Text>
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.addButton}>
-            <Ionicons name="pencil" size={20} color={themeColor.white} />
+            <Ionicons name="pencil" size={30} color={themeColor.white} />
           </TouchableOpacity>
         </View>
       </SectionContent>
@@ -37,11 +38,11 @@ export default function SubConDetHeader() {
 const styles = StyleSheet.create({
   headerContainer: {
     marginHorizontal: 7,
-    marginVertical: 7,
+    marginVertical: 12,
   },
   rowContainer: {
     flexDirection: "row",
-    paddingVertical: 7,
+    paddingVertical: 12,
     justifyContent: "space-between",
   },
   textContainer: {
@@ -49,7 +50,8 @@ const styles = StyleSheet.create({
     flex: 4,
   },
   text: {
-    marginVertical: 4,
+    fontSize: 17,
+    marginVertical: 7,
   },
   buttonContainer: {
     justifyContent: "center",

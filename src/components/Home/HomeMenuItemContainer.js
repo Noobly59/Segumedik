@@ -1,7 +1,6 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { Text } from "react-native-rapi-ui";
 import HomeMenuItem from "./HomeMenuItem";
 
@@ -16,13 +15,13 @@ export default function HomeMenuItemContainer() {
     <View style={styles.homeMenuInfoContainer}>
       <Text style={styles.text}>Seguimiento de Plan de Vigilancia</Text>
       <View style={styles.container}>
-        <TouchableWithoutFeedback onPress={goToSecAnnPlan}>
+        <TouchableOpacity onPress={goToSecAnnPlan} activeOpacity={0.5}>
           <HomeMenuItem
             menuItemName="Dar Seguimiento al Plan"
             backColor="#0aa2c0"
             icon="list-circle"
           />
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -30,14 +29,15 @@ export default function HomeMenuItemContainer() {
 
 const styles = StyleSheet.create({
   homeMenuInfoContainer: {
-    marginVertical: 5,
+    marginVertical: 15,
     flexDirection: "column",
     paddingHorizontal: 12,
   },
-  container: {
-    marginVertical: 5,
-  },
   text: {
+    fontSize: 19,
     fontWeight: "bold",
+  },
+  container: {
+    marginVertical: 17,
   },
 });

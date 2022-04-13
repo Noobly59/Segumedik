@@ -7,8 +7,8 @@ export default function SecAnnPlanDetail() {
   return (
     <>
       <SecAnnPlanDetHeader />
-      <SecAnnPlanDetPercentage percentage={74} />
-      <SecAnnPlanDetList percentage={79} />
+      <SecAnnPlanDetPercentage percentage={59} />
+      <SecAnnPlanDetList percentage={59} />
     </>
   );
 }

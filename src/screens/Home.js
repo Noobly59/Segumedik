@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SafeAreaView } from "react-native";
 import HomeMenuItemContainer from "../components/Home/HomeMenuItemContainer";
 import HomePercentageCompleted from "../components/Home/HomePercentageCompleted";
 import HomeSubConSection from "../components/Home/HomeSubConSection";
 import HomeWeeklyActivties from "../components/Home/HomeWeeklyActivties";
+import { getCompaniesAndHqName } from "../api/companiesAndHqs";
+// import useAuth from "../hooks/useAuth";
 
 export default function Home() {
+  // const { auth } = useAuth();
+
   const activities = [
     {
       id: "1",
@@ -45,17 +49,11 @@ export default function Home() {
       icon: "logo-tux",
     },
   ];
-  const items = [
-    {
-      number: "15",
-      text: "Condiciones pendientes",
-    },
-    { number: "7", text: "Condiciones cerradas" },
-  ];
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <HomePercentageCompleted percentage={95} />
-      <HomeSubConSection numberOfActAndInc={items} />
+      <HomePercentageCompleted percentage={59} />
+      <HomeSubConSection />
       <HomeMenuItemContainer />
       <HomeWeeklyActivties activities={activities} numAct={23} />
     </SafeAreaView>

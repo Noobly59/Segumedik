@@ -10,7 +10,7 @@ import {
 export default function SecAnnPlanDetHeader() {
   return (
     <Section style={styles.headerContainer}>
-      <SectionContent style={{ backgroundColor: themeColor.info }}>
+      <SectionContent style={{ backgroundColor: "#0aa2c0" }}>
         <View style={styles.textContainer}>
           <Text
             style={styles.text}

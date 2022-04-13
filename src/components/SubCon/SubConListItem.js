@@ -1,17 +1,89 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Section, Text, themeColor } from "react-native-rapi-ui";
 import { useNavigation } from "@react-navigation/native";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import moment from "moment";
 
 export default function SubConListItem(props) {
   const { subConDetails } = props;
   const navigation = useNavigation();
   const goToDetail = () => {
-    navigation.navigate("SubConDetail");
+    navigation.navigate("SubConDetail", subConDetails);
   };
+
+  const termColor = (num) => {
+    var color = "";
+    switch (num) {
+      case 1:
+        color = "danger";
+        break;
+      case 2:
+        color = "warning";
+        break;
+      case 3:
+        color = "warning";
+        break;
+      case 4:
+        color = "success600";
+        break;
+    }
+    return color;
+  };
+  const termText = (num) => {
+    var term = "";
+    switch (num) {
+      case 1:
+        term = "Inmediatamente";
+        break;
+      case 2:
+        term = "Corto Plazo";
+        break;
+      case 3:
+        term = "Mediano Plazo";
+        break;
+      case 4:
+        term = "Largo Plazo";
+        break;
+    }
+    return term;
+  };
+  const statusColor = (num) => {
+    var color = "";
+    switch (num) {
+      case 1:
+        color = "danger";
+        break;
+      case 2:
+        color = "success600";
+        break;
+    }
+    return color;
+  };
+  const statusText = (num) => {
+    var term = "";
+    switch (num) {
+      case 1:
+        term = "Pendiente";
+        break;
+      case 2:
+        term = "Ejecutada";
+        break;
+    }
+    return term;
+  };
+
+  moment.updateLocale("es", {
+    longDateFormat: {
+      L: "DD/MM/YYYY",
+    },
+  });
+
   return (
-    <TouchableWithoutFeedback onPress={goToDetail}>
-      <Section style={styles.itemContainer}>
+    <TouchableOpacity
+      style={styles.itemContainer}
+      onPress={goToDetail}
+      activeOpacity={0.5}
+    >
+      <Section>
         <View style={styles.container}>
           {/* <View style={styles.headquarters}>
             <Text style={styles.title}>GYE</Text>
@@ -19,40 +91,40 @@ export default function SubConListItem(props) {
           <View style={styles.conditionInfo}>
             <View style={styles.infoText}>
               <View>
-                <Text style={styles.subConDetail}>21-03-2022</Text>
+                <Text style={styles.subConDetail}>
+                  {moment(subConDetails.detectionDate).format("L")}
+                </Text>
               </View>
               <View>
                 <Text
                   style={styles.subConDetail}
-                  status={subConDetails.termColor}
+                  status={termColor(subConDetails.deadline)}
                 >
-                  {subConDetails.term}
+                  {termText(subConDetails.deadline)}
                 </Text>
               </View>
             </View>
             <Text style={styles.subConDetail} numberOfLines={1}>
-              {`${subConDetails.text}`}
+              {`${subConDetails.description}`}
             </Text>
-            <Text style={styles.subConDetail}>
-              Diego Emilio Suárez Villagómez
-            </Text>
+            <Text style={styles.subConDetail}>{subConDetails.responsible}</Text>
             <Text
               style={styles.subConDetail}
-              status={subConDetails.statusColor}
+              status={statusColor(subConDetails.conditionStatus)}
             >
-              {subConDetails.status}
+              {statusText(subConDetails.conditionStatus)}
             </Text>
           </View>
         </View>
       </Section>
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   itemContainer: {
     marginHorizontal: 10,
-    marginVertical: 7,
+    marginVertical: 10,
   },
   container: {
     flexDirection: "row",
@@ -76,7 +148,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   subConDetail: {
-    fontSize: 15,
+    fontSize: 17,
     marginBottom: 5,
   },
 });

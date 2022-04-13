@@ -1,11 +1,11 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 import {
   Section,
   SectionContent,
   Text,
   themeColor,
 } from "react-native-rapi-ui";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+// import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -16,7 +16,7 @@ export default function HomeWeeklyActItem(props) {
     navigation.navigate("SecAnnPlanNavigation");
   };
   return (
-    <TouchableWithoutFeedback onPress={goToSecAnnPlan}>
+    <TouchableOpacity onPress={goToSecAnnPlan} activeOpacity={0.5}>
       <Section style={styles.container}>
         <SectionContent
           style={{
@@ -27,7 +27,7 @@ export default function HomeWeeklyActItem(props) {
         >
           <Ionicons
             name={`${menuItemName.icon}`}
-            size={20}
+            size={30}
             color={themeColor.black}
           />
 
@@ -41,7 +41,7 @@ export default function HomeWeeklyActItem(props) {
           </View>
         </SectionContent>
       </Section>
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   );
 }
 
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     marginVertical: 7,
   },
   title: {
-    fontSize: 15,
+    fontSize: 16,
     textAlign: "left",
   },
   date: {

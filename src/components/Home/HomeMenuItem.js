@@ -19,7 +19,7 @@ export default function HomeMenuItem(props) {
           alignItems: "center",
         }}
       >
-        <Ionicons name={`${icon}`} size={20} color={themeColor.black} />
+        <Ionicons name={`${icon}`} size={25} color={themeColor.black} />
 
         <Text style={styles.title}>{menuItemName}</Text>
       </SectionContent>
@@ -29,7 +29,7 @@ export default function HomeMenuItem(props) {
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 15,
+    fontSize: 18,
     textAlign: "center",
     // color: "white",
   },

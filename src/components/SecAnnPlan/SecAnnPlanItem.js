@@ -47,7 +47,7 @@ export default function SecAnnPlanItem(props) {
 const styles = StyleSheet.create({
   itemContainer: {
     marginHorizontal: 10,
-    marginVertical: 7,
+    marginVertical: 12,
   },
   container: {
     flexDirection: "row",
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
-    fontSize: 15,
+    fontSize: 17,
     alignSelf: "center",
   },
   conditionInfo: {
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   secAnnPlanDetail: {
-    fontSize: 15,
+    fontSize: 16,
     marginBottom: 5,
   },
 });

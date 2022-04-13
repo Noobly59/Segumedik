@@ -25,9 +25,10 @@ export default function ProccesActivitiesHeader() {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
-    marginVertical: 5,
+    marginVertical: 2,
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
   },
   listTitle: {
     fontSize: 25,

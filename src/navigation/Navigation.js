@@ -1,29 +1,23 @@
 import "react-native-gesture-handler";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import SubConNavigation from "./SubConNavigation";
-import Home from "../screens/Home";
-import SecAnnPlanNavigation from "./SecAnnPlanNavigation";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import HomeNavigation from "./HomeNavigation";
+import ChooseCompany from "../screens/ChooseCompany";
 
-const Drawer = createDrawerNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function Navigation() {
   return (
-    <Drawer.Navigator initialRouteName="Home">
-      <Drawer.Screen
-        name="Home"
-        component={Home}
-        options={{ title: "Inicio" }}
+    <Stack.Navigator initialRouteName="ChooseCompany">
+      <Stack.Screen
+        name="HomeNavigation"
+        component={HomeNavigation}
+        options={{ title: "", headerShown: false }}
       />
-      <Drawer.Screen
-        name="SubConNavigation"
-        component={SubConNavigation}
-        options={{ title: "Condiciones Subestándar" }}
+      <Stack.Screen
+        name="ChooseCompany"
+        component={ChooseCompany}
+        options={{ title: "", headerShown: false }}
       />
-      <Drawer.Screen
-        name="SecAnnPlanNavigation"
-        component={SecAnnPlanNavigation}
-        options={{ title: "Plan de vigilancia" }}
-      ></Drawer.Screen>
-    </Drawer.Navigator>
+    </Stack.Navigator>
   );
 }

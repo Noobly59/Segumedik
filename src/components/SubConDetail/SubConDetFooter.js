@@ -9,7 +9,7 @@ export default function SubConDetFooter() {
     navigation.navigate("SubstandarCondition");
   };
   return (
-    <View style={{ top: -25, paddingHorizontal: 5 }}>
+    <View style={{ top: -7, paddingHorizontal: 5 }}>
       <Button
         text="Volver"
         color={themeColor.primary600}
@@ -17,7 +17,7 @@ export default function SubConDetFooter() {
         leftContent={
           <Ionicons
             name="arrow-back-circle"
-            size={20}
+            size={30}
             color={themeColor.white}
           />
         }

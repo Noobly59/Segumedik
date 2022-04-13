@@ -27,11 +27,11 @@ export default function ProcessActProcessedList(props) {
 const styles = StyleSheet.create({
   container: {
     marginTop: 5,
-    marginBottom: 20,
   },
   listTitle: {
     fontSize: 25,
     paddingHorizontal: 10,
+    marginVertical: 5,
   },
   itemContainer: { marginVertical: 5, paddingHorizontal: 10 },
   listItem: { marginVertical: 5 },

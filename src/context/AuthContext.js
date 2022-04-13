@@ -11,6 +11,7 @@ export function AuthProvider(props) {
   const [auth, setAuth] = useState(undefined);
 
   const login = (userData) => {
+    console.log(userData);
     setAuth(userData);
   };
 

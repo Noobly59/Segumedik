@@ -4,17 +4,31 @@ import {
   SectionImage,
   Text,
 } from "react-native-rapi-ui";
+import moment from "moment";
+import { Image } from "react-native";
 
-export default function DetectionTab() {
+export default function DetectionTab(props) {
+  const {
+    route: { params },
+  } = props;
+  const detEvidenceUrl = `http://sso.segumedik.com/${params.detectionDateAndEvidence.detectionEvidence}`;
   return (
     <Section style={{ top: 7 }}>
       <SectionContent>
-        <Text>{`Fecha de detección: 30/03/2022`}</Text>
+        <Text style={{ fontSize: 18 }}>{`Fecha de detección: ${moment(
+          params.detectionDateAndEvidence.detectionDate
+        ).format("L")}`}</Text>
+        <Image
+          source={{ uri: detEvidenceUrl }}
+          style={{
+            width: "95%",
+            height: "95%",
+            alignSelf: "center",
+            bottom: -16,
+          }}
+        />
       </SectionContent>
-      <SectionImage
-        height={350}
-        source={require("../../assets/extintor.jpg")}
-      />
+      {/* <SectionImage height={870} source={{ uri: detEvidenceUrl }} /> */}
     </Section>
   );
 }

@@ -57,6 +57,10 @@ export default function AddSubstandarCondition() {
     })();
   }, [formik.errors]);
 
+  const goToSubCon = () => {
+    navigation.navigate("SubstandarCondition");
+  };
+
   moment.updateLocale("es", {
     months:
       "Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre".split(
@@ -96,7 +100,7 @@ export default function AddSubstandarCondition() {
         </View>
         <View style={styles.formElement}>
           <Text style={styles.formLabel}>Fecha de detección:</Text>
-          <Section>
+          <Section style={styles.dateFormElement}>
             <SimplerDatePicker
               onDatePicked={(date) =>
                 formik.setFieldValue("detectionDate", date)
@@ -143,7 +147,7 @@ export default function AddSubstandarCondition() {
             <Button
               text="Salir"
               type="TouchableOpacity"
-              onPress={navigation.goBack}
+              onPress={goToSubCon}
               status="danger"
               leftContent={
                 <Ionicons
@@ -221,11 +225,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 12,
     marginVertical: 5,
   },
+  dateFormElement: {
+    borderColor: "#d8d8d8",
+    borderWidth: 1,
+  },
   formElement: {
-    marginVertical: 7,
+    marginVertical: 12,
   },
   formLabel: {
-    marginBottom: 3,
+    marginBottom: 10,
   },
   formButtons: {
     marginVertical: 12,
@@ -233,8 +241,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   positioning: {
-    top: "43%",
-    left: "13%",
+    top: "40%",
+    left: "30%",
     position: "absolute",
   },
   modalContainer: {

@@ -10,13 +10,20 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function SecAnnPlanDetListItem(props) {
-  const { monthItem, percentage } = props;
+  const { monthItem, percentage, color } = props;
   const navigation = useNavigation();
   const goToProcessActivities = () => {
     navigation.navigate("SecAnnPlanProcessActivities");
   };
   const barStyles = (num) => {
-    const color = num > 74 ? "#00ac17" : num > 32 ? "#e5e70b" : "#ff3e3e";
+    const color =
+      num > 99
+        ? themeColor.primary400
+        : num > 74
+        ? themeColor.success600
+        : num > 32
+        ? "#ffcd39"
+        : themeColor.danger600;
     return {
       backgroundColor: color,
       width: `${num}%`,
@@ -28,7 +35,7 @@ export default function SecAnnPlanDetListItem(props) {
       onPress={goToProcessActivities}
     >
       <Section style={{ flex: 1 }}>
-        <SectionContent style={styles.container}>
+        <SectionContent style={[styles.container, { backgroundColor: color }]}>
           <View>
             <Text>{monthItem}</Text>
           </View>

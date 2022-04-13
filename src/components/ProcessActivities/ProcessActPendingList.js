@@ -32,7 +32,7 @@ export default function ProcessActPendingList(props) {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
-    marginVertical: 5,
+    marginVertical: 3,
   },
 
   listItem: { marginVertical: 5 },

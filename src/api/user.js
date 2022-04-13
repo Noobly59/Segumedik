@@ -2,7 +2,7 @@ import { API_HOST } from "../utils/constants";
 
 export async function getUser(username) {
   try {
-    const url = `${API_HOST}/api/user/${username}`;
+    const url = `${API_HOST}/api/AuthUsers/${username}`;
     const response = await fetch(url);
     const result = await response.json();
     return result;

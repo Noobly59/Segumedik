@@ -22,7 +22,7 @@ export default function HomeWeeklyActivties(props) {
 const styles = StyleSheet.create({
   weeklyActivities: {
     paddingHorizontal: 12,
-    marginTop: 5,
+    marginTop: 15,
     flex: 1,
   },
   monthlyCounter: {
@@ -31,12 +31,13 @@ const styles = StyleSheet.create({
   },
   weeklyText: {
     marginBottom: 7,
+    fontSize: 19,
     fontWeight: "bold",
   },
   monthlyNumber: {
     marginBottom: 7,
     fontWeight: "bold",
     alignSelf: "center",
-    fontSize: 14,
+    fontSize: 17,
   },
 });

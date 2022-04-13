@@ -18,14 +18,14 @@ export default function SubConHeader() {
           style={styles.addButton}
           onPress={goToAddSubCon}
         >
-          <Ionicons name="add-circle" size={20} color={themeColor.white} />
+          <Ionicons name="add-circle" size={30} color={themeColor.white} />
         </TouchableWithoutFeedback>
       </View>
       <View style={styles.searchStyle}>
         <TextInput
           autoCapitalize="none"
           rightContent={
-            <Ionicons name="search" size={20} color={themeColor.primary700} />
+            <Ionicons name="search" size={30} color={themeColor.primary700} />
           }
         />
       </View>
@@ -36,7 +36,7 @@ export default function SubConHeader() {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
-    marginVertical: 5,
+    marginVertical: 7,
     flexDirection: "row",
   },
   addStyle: {

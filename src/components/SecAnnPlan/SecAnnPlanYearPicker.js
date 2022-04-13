@@ -25,6 +25,6 @@ export default function SecAnnPlanYearPicker() {
 const styles = StyleSheet.create({
   searchStyle: {
     marginHorizontal: 7,
-    marginVertical: 5,
+    marginVertical: 12,
   },
 });

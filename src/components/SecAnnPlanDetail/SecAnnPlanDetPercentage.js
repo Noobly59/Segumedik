@@ -1,11 +1,16 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { Text } from "react-native-rapi-ui";
+import { Text, themeColor } from "react-native-rapi-ui";
 
 export default function SecAnnPlanDetPercentage(props) {
   const { percentage } = props;
   const barStyles = (num) => {
-    const color = num > 74 ? "#00ac17" : num > 32 ? "#e5e70b" : "#ff3e3e";
+    const color =
+      num > 74
+        ? themeColor.success600
+        : num > 32
+        ? "#ffcd39"
+        : themeColor.danger600;
     return {
       backgroundColor: color,
       width: `${num}%`,
@@ -43,8 +48,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   percentage: {
-    width: "12%",
-    fontSize: 15,
+    fontSize: 20,
+    paddingRight: 7,
     alignSelf: "center",
   },
   fullBar: {

@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { View } from "react-native";
-import { Button, themeColor } from "react-native-rapi-ui";
+import { Button, themeColor, Picker } from "react-native-rapi-ui";
 import ProccesActivitiesHeader from "../components/ProcessActivities/ProccesActivitiesHeader";
 import ProcessActPendingList from "../components/ProcessActivities/ProcessActPendingList";
 import ProcessActProcessedList from "../components/ProcessActivities/ProcessActProcessedList";
 
 export default function SecAnnPlanProcessActivities() {
+  const [pickerValue, setPickerValue] = useState("1");
+  const items = [
+    { label: "Actividades pendientes", value: "1" },
+    { label: "Actividades procesadas", value: "2" },
+  ];
+
   const pendingActivities = [
     {
       id: "1",
@@ -91,31 +97,51 @@ export default function SecAnnPlanProcessActivities() {
         flexDirection: "column",
       }}
     >
-      <View style={{ flex: 4 }}>
-        <ProccesActivitiesHeader />
-        <ProcessActPendingList pendingActivities={pendingActivities} />
+      <View style={{ marginHorizontal: 7, marginVertical: 12, flex: 1 }}>
+        <Picker
+          items={items}
+          value={pickerValue}
+          placeholder="Actividades"
+          onValueChange={(val) => setPickerValue(val)}
+        />
       </View>
-      <View style={{ flex: 4 }}>
-        <ProcessActProcessedList processedActivities={processedActivities} />
+
+      <View style={{ flex: 20 }}>
+        {pickerValue === "1" ? (
+          <View style={{ flex: 1 }}>
+            <ProccesActivitiesHeader />
+            <ProcessActPendingList pendingActivities={pendingActivities} />
+          </View>
+        ) : (
+          <View style={{ flex: 1 }}>
+            <ProcessActProcessedList
+              processedActivities={processedActivities}
+            />
+          </View>
+        )}
       </View>
+
       <View
         style={{
           flex: 1,
-          flexDirection: "row",
-          justifyContent: "space-between",
           padding: 4,
+          marginBottom: 50,
         }}
       >
-        <Button
-          text="Ver Reporte"
-          type="TouchableOpacity"
-          color={themeColor.primary600}
-        />
-        <Button
-          text="Enviar Reporte"
-          type="TouchableOpacity"
-          color={themeColor.primary600}
-        />
+        <View style={{ marginVertical: 3 }}>
+          <Button
+            text="Ver Reporte"
+            type="TouchableOpacity"
+            color={themeColor.gray300}
+          />
+        </View>
+        <View style={{ marginVertical: 3 }}>
+          <Button
+            text="Enviar Reporte"
+            type="TouchableOpacity"
+            color={themeColor.success600}
+          />
+        </View>
       </View>
       {/* <ProccesActivitiesHeader style={{ height: "10%" }} />
       <ProcessActPendingList

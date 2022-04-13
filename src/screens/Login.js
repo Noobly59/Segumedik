@@ -27,9 +27,18 @@ export default function Login() {
     onSubmit: async (formValue) => {
       setError("");
       const { username, password } = formValue;
-      const user = await getUserByUserName(username);
-      if (user.userName !== "") {
-        console.log(user.userName);
+      const response = await getUserByUserName(username);
+      if (response[0].userName !== "") {
+        console.log(response[0].userName);
+        const user = [
+          {
+            userName: response[0].userName,
+            companyId: "",
+            companyName: "",
+            headquarterId: "",
+            name: "",
+          },
+        ];
         login(user);
       } else {
         setError("El usuario no existe");
