@@ -24,6 +24,10 @@ export default function SubConDetHeader(props) {
             numberOfLines={2}
             style={styles.text}
           >{`Descripción: ${responsibleAndDesc.description}`}</Text>
+          <Text
+            numberOfLines={1}
+            style={styles.text}
+          >{`Recomendaciones: ${responsibleAndDesc.recommendations}`}</Text>
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.addButton}>
@@ -58,7 +62,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   addButton: {
-    height: 50,
+    height: 70,
     borderRadius: 10,
     backgroundColor: themeColor.primary600,
     alignItems: "center",

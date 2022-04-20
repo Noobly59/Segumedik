@@ -29,7 +29,7 @@ export default function Login() {
       const { username, password } = formValue;
       const response = await getUserByUserName(username);
       if (response[0].userName !== "") {
-        console.log(response[0].userName);
+        // console.log(response[0].userName);
         const user = [
           {
             userName: response[0].userName,

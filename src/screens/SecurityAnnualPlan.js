@@ -30,7 +30,7 @@ export default function SecurityAnnualPlan() {
   const actualPlan = ["Cronograma de Actividades del Año 2022"];
   return (
     <>
-      <SecAnnPlanYearPicker />
+      {/* <SecAnnPlanYearPicker /> */}
       <SecAnnActualPlan
         secAnnPlanDetail={actualPlan}
         percentage={95}

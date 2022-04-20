@@ -7,12 +7,15 @@ export default function SubConDetail(props) {
   const {
     route: { params },
   } = props;
+  console.log(params.closingEvidence);
   return (
     <>
       <SubConDetHeader
         responsibleAndDesc={{
+          id: params.conditionId,
           responsible: params.responsible,
           description: params.description,
+          recommendations: params.recommendations,
         }}
       />
       <SubConDetTab
@@ -24,6 +27,7 @@ export default function SubConDetail(props) {
           closingDate: params.closingDate,
           closingEvidence: params.closingEvidence,
         }}
+        id={params.conditionId}
       />
       <SubConDetFooter />
     </>

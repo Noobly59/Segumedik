@@ -1,11 +1,20 @@
+import React from "react";
+import { useStateWithCallbackLazy } from "use-state-with-callback";
 import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
 import { Text, themeColor } from "react-native-rapi-ui";
 import SubConListItem from "./SubConListItem";
 
 export default function SubConList(props) {
   const { conditions, loadSubConditions, isNext } = props;
+  const [refresh, setRefresh] = useStateWithCallbackLazy(false);
   const loadMore = () => {
-    loadSubConditions();
+    loadSubConditions(false);
+  };
+  const handleRefresh = () => {
+    setRefresh(true, (refresh) => {
+      loadSubConditions(true);
+      setRefresh(false);
+    });
   };
 
   return (
@@ -17,6 +26,8 @@ export default function SubConList(props) {
       renderItem={({ item }) => <SubConListItem subConDetails={item} />}
       onEndReached={isNext && loadMore}
       onEndReachedThreshold={0.1}
+      refreshing={refresh}
+      onRefresh={handleRefresh}
       ListFooterComponent={
         isNext && (
           <ActivityIndicator

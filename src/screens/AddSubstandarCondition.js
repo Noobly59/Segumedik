@@ -15,23 +15,25 @@ import { Ionicons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import moment from "moment";
 import SimplerDatePicker from "@cawfree/react-native-simpler-date-picker";
+import useAuth from "../hooks/useAuth";
 
 export default function AddSubstandarCondition() {
   const navigation = useNavigation();
   const [error, setError] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
-  const hqItems = [
-    { label: "Guayaquil", value: "1" },
-    { label: "Quito", value: "2" },
-    { label: "Cuenca", value: "3" },
-    { label: "Manta", value: "4" },
-  ];
+  const { auth } = useAuth();
+  // const hqItems = [
+  //   { label: "Guayaquil", value: "1" },
+  //   { label: "Quito", value: "2" },
+  //   { label: "Cuenca", value: "3" },
+  //   { label: "Manta", value: "4" },
+  // ];
 
   const termItems = [
-    { label: "Inmediatamente", value: "1" },
-    { label: "Corto Plazo", value: "2" },
-    { label: "Mediano Plazo", value: "3" },
-    { label: "Largo Plazo", value: "4" },
+    { label: "Inmediatamente", value: 1 },
+    { label: "Corto Plazo", value: 2 },
+    { label: "Mediano Plazo", value: 3 },
+    { label: "Largo Plazo", value: 4 },
   ];
 
   const formik = useFormik({
@@ -39,8 +41,25 @@ export default function AddSubstandarCondition() {
     validationSchema: Yup.object(validationSchema()),
     validateOnChange: false,
     onSubmit: (formValue) => {
+      const { description, detectionDate, responsable, term } = formValue;
       setError("");
-      navigation.navigate("AddSubConTakePicture");
+      const condition = [
+        {
+          conditionId: null,
+          headquarterId: auth[0].headquarterId,
+          description: description,
+          detectionDate: moment(detectionDate).format(),
+          detectionEvidence: null,
+          responsible: responsable,
+          closingDate: null,
+          closingEvidence: null,
+          deadline: term,
+          conditionStatus: 1,
+          createdBy: auth[0].userName,
+        },
+      ];
+      console.log(condition);
+      navigation.navigate("AddSubConTakePicture", condition);
     },
   });
   useEffect(() => {
@@ -77,7 +96,7 @@ export default function AddSubstandarCondition() {
       enabled
     >
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.formElement}>
+        {/* <View style={styles.formElement}>
           <Text style={styles.formLabel}>Sede:</Text>
           <Picker
             items={hqItems}
@@ -87,7 +106,7 @@ export default function AddSubstandarCondition() {
               formik.setFieldValue("hq", val);
             }}
           />
-        </View>
+        </View> */}
         <View style={styles.formElement}>
           <Text style={styles.formLabel}>Descripción:</Text>
 
@@ -203,7 +222,7 @@ function initialValues() {
     description: "",
     detectionDate: "",
     responsable: "",
-    hq: [{ id: "", label: "" }],
+    // hq: "",
     term: "",
   };
 }
@@ -215,7 +234,7 @@ function validationSchema() {
     detectionDate: Yup.string().required(
       "La fecha de detección es obligatoria"
     ),
-    hq: Yup.string().required("La sede es obligatoria"),
+    // hq: Yup.string().required("La sede es obligatoria"),
     term: Yup.string().required("El plazo es obligatorio"),
   };
 }

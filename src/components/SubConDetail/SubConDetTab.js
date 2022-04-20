@@ -8,7 +8,8 @@ import { StyleSheet } from "react-native";
 const Tab = createMaterialTopTabNavigator();
 
 export default function SubConDetTab(props) {
-  const { detectionDateAndEvidence, closingDateAndEvidence } = props;
+  const { detectionDateAndEvidence, closingDateAndEvidence, id } = props;
+  // console.log(id);
   return (
     <Tab.Navigator style={styles.tabContainer}>
       <Tab.Screen
@@ -25,7 +26,10 @@ export default function SubConDetTab(props) {
         options={{
           tabBarLabel: () => <Text style={{ fontSize: 20 }}>Cierre</Text>,
         }}
-        initialParams={{ closingDateAndEvidence: closingDateAndEvidence }}
+        initialParams={{
+          closingDateAndEvidence: closingDateAndEvidence,
+          id: id,
+        }}
       />
     </Tab.Navigator>
   );

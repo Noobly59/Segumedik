@@ -11,7 +11,15 @@ export default function DetectionTab(props) {
   const {
     route: { params },
   } = props;
-  const detEvidenceUrl = `http://sso.segumedik.com/${params.detectionDateAndEvidence.detectionEvidence}`;
+
+  const firstLetter =
+    params.detectionDateAndEvidence.detectionEvidence?.charAt(0);
+
+  const detEvidenceUrl =
+    firstLetter !== "h"
+      ? `http://sso.segumedik.com/${params.detectionDateAndEvidence.detectionEvidence}`
+      : `${params.detectionDateAndEvidence.detectionEvidence}`;
+
   return (
     <Section style={{ top: 7 }}>
       <SectionContent>

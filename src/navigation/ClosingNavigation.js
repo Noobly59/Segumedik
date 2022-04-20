@@ -2,12 +2,12 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SubstandarCondition from "../screens/SubstandarCondition";
 import AddSubstandarCondition from "../screens/AddSubstandarCondition";
 import AddSubConTakePicture from "../screens/AddSubConTakePicture";
+import SubConTakePicture from "../screens/SubConTakePicture";
 import SubConDetail from "../screens/SubConDetail";
-import AddClosingPicture from "../screens/AddClosingPicture";
 
 const Stack = createNativeStackNavigator();
 
-export default function SubConNavigation() {
+export default function ClosingNavigation() {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -25,14 +25,14 @@ export default function SubConNavigation() {
         component={AddSubConTakePicture}
         options={{ title: "", headerShown: false }}
       />
+      {/* <Stack.Screen
+          name="SubConTakePicture"
+          component={SubConTakePicture}
+          options={{ title: "", headerShown: false }}
+        /> */}
       <Stack.Screen
         name="SubConDetail"
         component={SubConDetail}
-        options={{ title: "", headerShown: false }}
-      />
-      <Stack.Screen
-        name="AddClosingPicture"
-        component={AddClosingPicture}
         options={{ title: "", headerShown: false }}
       />
     </Stack.Navigator>
