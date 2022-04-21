@@ -4,10 +4,13 @@ import SubConList from "../components/SubCon/SubConList";
 import { getSubCons } from "../api/substandardConditions";
 import useAuth from "../hooks/useAuth";
 import { SafeAreaView } from "react-native";
+import { filter } from "lodash";
 
 export default function SubstandarCondition() {
   const [subCons, setSubCons] = useState([]);
   const [nextUrl, setNextUrl] = useState(null);
+  const [query, setQuery] = useState("");
+  const [fullData, setFullData] = useState([]);
   const { auth } = useAuth();
 
   useEffect(() => {
@@ -15,6 +18,27 @@ export default function SubstandarCondition() {
       await loadSubConditions(false);
     })();
   }, []);
+
+  const handleSearch = (text) => {
+    const formattedQuery = text.toLowerCase();
+    const data = filter(fullData, (condition) => {
+      return contains(condition, formattedQuery);
+    });
+    setSubCons(data);
+    setQuery(text);
+  };
+
+  const contains = ({ description, responsible }, query) => {
+    const descriptionToLower = description.toLowerCase();
+    const responsibleToLower = responsible.toLowerCase();
+    if (
+      descriptionToLower.includes(query) ||
+      responsibleToLower.includes(query)
+    ) {
+      return true;
+    }
+    return false;
+  };
 
   const loadSubConditions = async (firstPageReload) => {
     try {
@@ -43,8 +67,9 @@ export default function SubstandarCondition() {
         });
       }
       firstPageReload
-        ? setSubCons([...subConsArray])
-        : setSubCons([...subCons, ...subConsArray]);
+        ? (setSubCons([...subConsArray]), setFullData([...subConsArray]))
+        : (setSubCons([...subCons, ...subConsArray]),
+          setFullData([...fullData, ...subConsArray]));
     } catch (error) {
       console.error("list ", error);
     }
@@ -52,7 +77,7 @@ export default function SubstandarCondition() {
 
   return (
     <SafeAreaView style={{ paddingBottom: 70 }}>
-      <SubConHeader />
+      <SubConHeader handleSearch={handleSearch} />
       <SubConList
         style={{ flex: 1 }}
         conditions={subCons}

@@ -4,7 +4,8 @@ import { TextInput, themeColor } from "react-native-rapi-ui";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
-export default function SubConHeader() {
+export default function SubConHeader(props) {
+  const { handleSearch } = props;
   const navigation = useNavigation();
 
   const goToAddSubCon = () => {
@@ -24,6 +25,7 @@ export default function SubConHeader() {
       <View style={styles.searchStyle}>
         <TextInput
           autoCapitalize="none"
+          onChangeText={(text) => handleSearch(text)}
           rightContent={
             <Ionicons name="search" size={30} color={themeColor.primary700} />
           }

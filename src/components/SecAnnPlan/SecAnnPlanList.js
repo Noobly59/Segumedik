@@ -52,10 +52,10 @@ export default function SecAnnPlanList(props) {
               <FlatList
                 data={annualPlans}
                 numColumns={1}
-                keyExtractor={(plan) => [plan.id]}
+                keyExtractor={(plan) => [plan["annualPlan"].id]}
                 showsVerticalScrollIndicator={true}
                 renderItem={({ item }) => (
-                  <SecAnnPlanItem secAnnPlanDetail={item.title} />
+                  <SecAnnPlanItem secAnnPlanDetail={item} />
                 )}
                 onEndReachedThreshold={0.1}
               />

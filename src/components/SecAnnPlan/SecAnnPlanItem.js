@@ -9,7 +9,7 @@ export default function SecAnnPlanItem(props) {
   const goToDetail = () => {
     navigation.navigate("SecAnnPlanDetail");
   };
-
+  console.log(secAnnPlanDetail);
   return (
     <TouchableWithoutFeedback onPress={goToDetail}>
       <Section style={styles.itemContainer}>
@@ -24,7 +24,7 @@ export default function SecAnnPlanItem(props) {
                   Empresa para pruebas
                 </Text> */}
                 <Text style={styles.secAnnPlanDetail} numberOfLines={1}>
-                  {`${secAnnPlanDetail}`}
+                  {`${secAnnPlanDetail["annualPlan"].name}`}
                 </Text>
               </View>
               <View>
@@ -35,7 +35,7 @@ export default function SecAnnPlanItem(props) {
             </View>
 
             <Text style={styles.secAnnPlanDetail}>
-              Diego Emilio Suárez Villagómez
+              {`${secAnnPlanDetail["collaborator"]?.firstName} ${secAnnPlanDetail["collaborator"]?.lastName}`}
             </Text>
           </View>
         </View>

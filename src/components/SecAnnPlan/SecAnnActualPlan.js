@@ -7,6 +7,7 @@ import {
 } from "react-native-rapi-ui";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import moment from "moment";
 
 export default function SecAnnActualPlan(props) {
   const { secAnnPlanDetail, percentage, status } = props;
@@ -32,14 +33,22 @@ export default function SecAnnActualPlan(props) {
       <Section style={styles.headerContainer}>
         <SectionContent>
           <View style={styles.textContainer}>
-            <Text style={styles.text}>{secAnnPlanDetail}</Text>
+            <Text style={styles.text}>
+              {secAnnPlanDetail["annualPlan"]?.name}
+            </Text>
             <Text
               style={styles.text}
-            >{`Responsable: Diego Emilio Suárez Villagómez`}</Text>
+            >{`Responsable: ${secAnnPlanDetail["collaborator"]?.firstName} ${secAnnPlanDetail["collaborator"]?.lastName}`}</Text>
           </View>
           <View style={styles.dateContainer}>
-            <Text style={styles.text}>{`Inicio: 01-01-2022`}</Text>
-            <Text style={styles.text}>{`Fin: 01-01-2023`}</Text>
+            <Text style={styles.text}>{`Inicio: ${moment(
+              secAnnPlanDetail["annualPlan"]?.startDate
+            ).format("L")}`}</Text>
+            <Text style={styles.text}>{`Fin: ${moment([
+              secAnnPlanDetail["annualPlan"]?.startDate,
+            ])
+              .add(1, "y")
+              .format("L")}`}</Text>
           </View>
           <View style={styles.percentageBarContainer}>
             <View style={styles.barContainer}>
