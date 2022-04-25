@@ -52,7 +52,7 @@ export default function Home() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <HomePercentageCompleted percentage={59} />
+      <HomePercentageCompleted percentage={75} />
       <HomeSubConSection />
       <HomeMenuItemContainer />
       <HomeWeeklyActivties activities={activities} numAct={23} />

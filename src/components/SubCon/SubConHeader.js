@@ -3,6 +3,7 @@ import { View, StyleSheet } from "react-native";
 import { TextInput, themeColor } from "react-native-rapi-ui";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { COLORS } from "../../utils/constants";
 
 export default function SubConHeader(props) {
   const { handleSearch } = props;
@@ -19,7 +20,7 @@ export default function SubConHeader(props) {
           style={styles.addButton}
           onPress={goToAddSubCon}
         >
-          <Ionicons name="add-circle" size={30} color={themeColor.white} />
+          <Ionicons name="add-circle" size={30} color={COLORS.white} />
         </TouchableWithoutFeedback>
       </View>
       <View style={styles.searchStyle}>
@@ -27,7 +28,7 @@ export default function SubConHeader(props) {
           autoCapitalize="none"
           onChangeText={(text) => handleSearch(text)}
           rightContent={
-            <Ionicons name="search" size={30} color={themeColor.primary700} />
+            <Ionicons name="search" size={30} color={COLORS.primary} />
           }
         />
       </View>
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
   addButton: {
     height: 50,
     borderRadius: 10,
-    backgroundColor: themeColor.primary600,
+    backgroundColor: COLORS.primary,
     alignItems: "center",
     justifyContent: "center",
   },

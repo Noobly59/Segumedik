@@ -3,14 +3,16 @@ import SubConHeader from "../components/SubCon/SubConHeader";
 import SubConList from "../components/SubCon/SubConList";
 import { getSubCons } from "../api/substandardConditions";
 import useAuth from "../hooks/useAuth";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, ActivityIndicator, StyleSheet } from "react-native";
 import { filter } from "lodash";
+import { COLORS } from "../utils/constants";
 
 export default function SubstandarCondition() {
   const [subCons, setSubCons] = useState([]);
   const [nextUrl, setNextUrl] = useState(null);
   const [query, setQuery] = useState("");
   const [fullData, setFullData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { auth } = useAuth();
 
   useEffect(() => {
@@ -62,6 +64,7 @@ export default function SubstandarCondition() {
           closingEvidence: subCon.closingEvidence,
           deadline: subCon.deadline,
           conditionStatus: subCon.conditionStatus,
+          closingOrientation: null,
           recommendations:
             subCon.recommendations === "" ? "N/A" : subCon.recommendations,
         });
@@ -70,6 +73,7 @@ export default function SubstandarCondition() {
         ? (setSubCons([...subConsArray]), setFullData([...subConsArray]))
         : (setSubCons([...subCons, ...subConsArray]),
           setFullData([...fullData, ...subConsArray]));
+      setLoading(false);
     } catch (error) {
       console.error("list ", error);
     }
@@ -78,12 +82,26 @@ export default function SubstandarCondition() {
   return (
     <SafeAreaView style={{ paddingBottom: 70 }}>
       <SubConHeader handleSearch={handleSearch} />
-      <SubConList
-        style={{ flex: 1 }}
-        conditions={subCons}
-        loadSubConditions={loadSubConditions}
-        isNext={nextUrl}
-      />
+      {loading ? (
+        <ActivityIndicator
+          size="large"
+          style={styles.spinner}
+          color={COLORS.primary}
+        />
+      ) : (
+        <SubConList
+          style={{ flex: 1 }}
+          conditions={subCons}
+          loadSubConditions={loadSubConditions}
+          isNext={nextUrl}
+        />
+      )}
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  spinner: {
+    marginVertical: 10,
+  },
+});

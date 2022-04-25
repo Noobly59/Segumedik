@@ -6,22 +6,30 @@ import {
   Text,
   themeColor,
 } from "react-native-rapi-ui";
+import { COLORS } from "../../utils/constants";
+import moment from "moment";
 
-export default function SecAnnPlanDetHeader() {
+export default function SecAnnPlanDetHeader(props) {
+  const { title, responsible, startDate } = props;
+  moment.updateLocale("es", {
+    longDateFormat: {
+      L: "DD/MM/YYYY",
+    },
+  });
   return (
     <Section style={styles.headerContainer}>
-      <SectionContent style={{ backgroundColor: "#0aa2c0" }}>
+      <SectionContent style={{ backgroundColor: COLORS.info }}>
         <View style={styles.textContainer}>
-          <Text
-            style={styles.text}
-          >{`Cronograma de Actividades del Año 2022`}</Text>
-          <Text
-            style={styles.text}
-          >{`Responsable: Diego Emilio Suárez Villagómez`}</Text>
+          <Text style={styles.text}>{title}</Text>
+          <Text style={styles.text}>{`Responsable: ${responsible}`}</Text>
         </View>
         <View style={styles.dateContainer}>
-          <Text style={styles.text}>{`Inicio: 01-01-2022`}</Text>
-          <Text style={styles.text}>{`Fin: 01-01-2023`}</Text>
+          <Text style={styles.text}>{`Inicio: ${moment(startDate).format(
+            "L"
+          )}`}</Text>
+          <Text style={styles.text}>{`Fin: ${moment(startDate)
+            .add(1, "y")
+            .format("L")}`}</Text>
         </View>
       </SectionContent>
     </Section>
@@ -38,6 +46,7 @@ const styles = StyleSheet.create({
   },
   text: {
     marginVertical: 4,
+    color: COLORS.white,
   },
   dateContainer: {
     flexDirection: "row",

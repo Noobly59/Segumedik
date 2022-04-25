@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { View } from "react-native";
+import { View, ActivityIndicator, StyleSheet } from "react-native";
 // import SecAnnPlanYearPicker from "../components/SecAnnPlan/SecAnnPlanYearPicker";
 import SecAnnPlanList from "../components/SecAnnPlan/SecAnnPlanList";
 import SecAnnActualPlan from "../components/SecAnnPlan/SecAnnActualPlan";
-import { themeColor } from "react-native-rapi-ui";
+import { themeColor, Text } from "react-native-rapi-ui";
 import { getAnnualPlan } from "../api/securityAnnualPlans";
 import useAuth from "../hooks/useAuth";
+import { COLORS } from "../utils/constants";
 
 export default function SecurityAnnualPlan() {
   const [annualPlans, setAnnualPlans] = useState([]);
   const [actualPlan, setActualPlan] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const { auth } = useAuth();
 
   useEffect(() => {
@@ -23,8 +26,10 @@ export default function SecurityAnnualPlan() {
       const response = await getAnnualPlan(auth[0].headquarterId);
       setAnnualPlans(response);
       setActualPlan(response[0]);
+      setLoading(false);
       // console.log("lihlsdvjk", actualPlan["annualPlan"].name);
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -55,19 +60,37 @@ export default function SecurityAnnualPlan() {
   return (
     <>
       {/* <SecAnnPlanYearPicker /> */}
-      <SecAnnActualPlan
-        secAnnPlanDetail={actualPlan}
-        percentage={95}
-        status="success600"
-      />
-
-      <SecAnnPlanList annualPlans={annualPlans} />
-      <View
-        style={{
-          height: 1,
-          backgroundColor: themeColor.gray100,
-        }}
-      />
+      {loading ? (
+        <ActivityIndicator
+          size="large"
+          style={styles.spinner}
+          color={COLORS.primary}
+        />
+      ) : typeof actualPlan !== "undefined" ? (
+        <>
+          <SecAnnActualPlan
+            secAnnPlanDetail={actualPlan}
+            percentage={95}
+            status="success"
+            isLoading={loading}
+          />
+          <SecAnnPlanList annualPlans={annualPlans} isLoading={loading} />
+          <View
+            style={{
+              height: 1,
+              backgroundColor: COLORS.neutral,
+            }}
+          />
+        </>
+      ) : (
+        <Text>asdasdasd</Text>
+      )}
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  spinner: {
+    marginVertical: 10,
+  },
+});

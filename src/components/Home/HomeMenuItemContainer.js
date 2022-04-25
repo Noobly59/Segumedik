@@ -3,6 +3,7 @@ import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Text } from "react-native-rapi-ui";
 import HomeMenuItem from "./HomeMenuItem";
+import { COLORS } from "../../utils/constants";
 
 export default function HomeMenuItemContainer() {
   const navigation = useNavigation();
@@ -18,7 +19,7 @@ export default function HomeMenuItemContainer() {
         <TouchableOpacity onPress={goToSecAnnPlan} activeOpacity={0.5}>
           <HomeMenuItem
             menuItemName="Dar Seguimiento al Plan"
-            backColor="#0aa2c0"
+            backColor={COLORS.primary}
             icon="list-circle"
           />
         </TouchableOpacity>

@@ -23,7 +23,7 @@ export default function SubConListItem(props) {
         color = "warning";
         break;
       case 4:
-        color = "success600";
+        color = "success";
         break;
     }
     return color;
@@ -53,7 +53,7 @@ export default function SubConListItem(props) {
         color = "danger";
         break;
       case 2:
-        color = "success600";
+        color = "success";
         break;
     }
     return color;

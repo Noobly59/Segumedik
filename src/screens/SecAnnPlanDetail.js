@@ -3,10 +3,18 @@ import SecAnnPlanDetHeader from "../components/SecAnnPlanDetail/SecAnnPlanDetHea
 import SecAnnPlanDetPercentage from "../components/SecAnnPlanDetail/SecAnnPlanDetPercentage";
 import SecAnnPlanDetList from "../components/SecAnnPlanDetail/SecAnnPlanDetList";
 
-export default function SecAnnPlanDetail() {
+export default function SecAnnPlanDetail(props) {
+  const {
+    route: { params },
+  } = props;
+  console.log(params);
   return (
     <>
-      <SecAnnPlanDetHeader />
+      <SecAnnPlanDetHeader
+        title={params["annualPlan"]?.name}
+        responsible={`${params["collaborator"]?.firstName} ${params["collaborator"]?.lastName}`}
+        startDate={params["annualPlan"].startDate}
+      />
       <SecAnnPlanDetPercentage percentage={59} />
       <SecAnnPlanDetList percentage={59} />
     </>

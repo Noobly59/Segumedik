@@ -4,6 +4,7 @@ import { Button, themeColor, Picker } from "react-native-rapi-ui";
 import ProccesActivitiesHeader from "../components/ProcessActivities/ProccesActivitiesHeader";
 import ProcessActPendingList from "../components/ProcessActivities/ProcessActPendingList";
 import ProcessActProcessedList from "../components/ProcessActivities/ProcessActProcessedList";
+import { COLORS } from "../utils/constants";
 
 export default function SecAnnPlanProcessActivities() {
   const [pickerValue, setPickerValue] = useState("1");
@@ -132,14 +133,14 @@ export default function SecAnnPlanProcessActivities() {
           <Button
             text="Ver Reporte"
             type="TouchableOpacity"
-            color={themeColor.gray300}
+            color={COLORS.neutral}
           />
         </View>
         <View style={{ marginVertical: 3 }}>
           <Button
             text="Enviar Reporte"
             type="TouchableOpacity"
-            color={themeColor.success600}
+            color={COLORS.success}
           />
         </View>
       </View>

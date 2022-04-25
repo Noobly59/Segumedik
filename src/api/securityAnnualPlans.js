@@ -5,7 +5,7 @@ export async function getAnnualPlan(hqId) {
     const url = `${API_HOST}/api/AnnualPlans/${hqId}`;
     const response = await fetch(url);
     const result = await response.json();
-    // console.log(result);
+    console.log(result);
     return result;
   } catch (error) {
     throw error;

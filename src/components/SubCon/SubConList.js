@@ -3,6 +3,7 @@ import { useStateWithCallbackLazy } from "use-state-with-callback";
 import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
 import { Text, themeColor } from "react-native-rapi-ui";
 import SubConListItem from "./SubConListItem";
+import { COLORS } from "../../utils/constants";
 
 export default function SubConList(props) {
   const { conditions, loadSubConditions, isNext } = props;
@@ -28,12 +29,13 @@ export default function SubConList(props) {
       onEndReachedThreshold={0.1}
       refreshing={refresh}
       onRefresh={handleRefresh}
+      ListEmptyComponent={() => <Text>No hay condiciones</Text>}
       ListFooterComponent={
         isNext && (
           <ActivityIndicator
             size="large"
             style={styles.spinner}
-            color={themeColor.primary400}
+            color={COLORS.primary}
           />
         )
       }

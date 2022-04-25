@@ -8,9 +8,10 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
+import { COLORS } from "../../utils/constants";
 
 export default function SecAnnPlanDetListItem(props) {
-  const { monthItem, percentage, color } = props;
+  const { monthItem, percentage, color, textColor } = props;
   const navigation = useNavigation();
   const goToProcessActivities = () => {
     navigation.navigate("SecAnnPlanProcessActivities");
@@ -18,16 +19,28 @@ export default function SecAnnPlanDetListItem(props) {
   const barStyles = (num) => {
     const color =
       num > 99
-        ? themeColor.primary400
+        ? COLORS.primary
         : num > 74
-        ? themeColor.success600
+        ? COLORS.success
         : num > 32
-        ? "#ffcd39"
-        : themeColor.danger600;
+        ? COLORS.warning
+        : COLORS.danger;
     return {
       backgroundColor: color,
       width: `${num}%`,
     };
+  };
+  const countAndMonthColor = (num) => {
+    var color = "";
+    switch (num) {
+      case 0:
+        color = "black";
+        break;
+      case 1:
+        color = "white";
+        break;
+    }
+    return color;
   };
   return (
     <TouchableWithoutFeedback
@@ -37,7 +50,7 @@ export default function SecAnnPlanDetListItem(props) {
       <Section style={{ flex: 1 }}>
         <SectionContent style={[styles.container, { backgroundColor: color }]}>
           <View>
-            <Text>{monthItem}</Text>
+            <Text status={countAndMonthColor(textColor)}>{monthItem}</Text>
           </View>
 
           <View style={styles.infoTextContainer}>
@@ -46,13 +59,9 @@ export default function SecAnnPlanDetListItem(props) {
                 <View style={[styles.tintedBar, barStyles(percentage)]} />
               </View>
             </View>
-            <Text>5/7</Text>
+            <Text status={countAndMonthColor(textColor)}>5/7</Text>
 
-            <Ionicons
-              name="chevron-forward"
-              size={25}
-              color={themeColor.primary600}
-            />
+            <Ionicons name="chevron-forward" size={25} color={COLORS.primary} />
           </View>
         </SectionContent>
       </Section>
@@ -83,14 +92,15 @@ const styles = StyleSheet.create({
   fullBar: {
     backgroundColor: "#dedede",
     width: "50%",
-    height: 5,
+    height: 6,
     borderRadius: 20,
     overflow: "hidden",
   },
   tintedBar: {
     // backgroundColor: "#e5e70b",
     // width: "58%",
-    height: 5,
+    borderWidth: 0.7,
+    height: 6,
     borderRadius: 20,
   },
 });

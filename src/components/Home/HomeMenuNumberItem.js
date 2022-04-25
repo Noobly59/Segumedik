@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { Section, SectionContent, Text } from "react-native-rapi-ui";
+import { COLORS } from "../../utils/constants";
 
 export default function HomeMenuNumberItem(props) {
   const { menuItemNumber, menuItemName, backColor } = props;
@@ -19,9 +20,11 @@ const styles = StyleSheet.create({
     fontSize: 25,
     textAlign: "center",
     fontWeight: "bold",
+    color: COLORS.white,
   },
   body: {
     fontSize: 17,
     textAlign: "center",
+    color: COLORS.white,
   },
 });

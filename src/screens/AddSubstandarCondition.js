@@ -16,11 +16,11 @@ import { ScrollView } from "react-native-gesture-handler";
 import moment from "moment";
 import SimplerDatePicker from "@cawfree/react-native-simpler-date-picker";
 import useAuth from "../hooks/useAuth";
+import { COLORS } from "../utils/constants";
 
 export default function AddSubstandarCondition() {
   const navigation = useNavigation();
   const [error, setError] = useState("");
-  const [modalVisible, setModalVisible] = useState(false);
   const { auth } = useAuth();
   // const hqItems = [
   //   { label: "Guayaquil", value: "1" },
@@ -56,25 +56,14 @@ export default function AddSubstandarCondition() {
           deadline: term,
           conditionStatus: 1,
           createdBy: auth[0].userName,
+          detectionOrientation: 0,
+          closingOrientation: 0,
         },
       ];
       console.log(condition);
       navigation.navigate("AddSubConTakePicture", condition);
     },
   });
-  useEffect(() => {
-    (() => {
-      if (
-        formik.errors.description ||
-        formik.errors.responsable ||
-        formik.errors.detectionDate ||
-        formik.errors.hq ||
-        formik.errors.term
-      ) {
-        setModalVisible(true);
-      }
-    })();
-  }, [formik.errors]);
 
   const goToSubCon = () => {
     navigation.navigate("SubstandarCondition");
@@ -116,6 +105,7 @@ export default function AddSubstandarCondition() {
             placeholder="Descripción"
             onChangeText={(text) => formik.setFieldValue("description", text)}
           />
+          <Text style={styles.error}>{formik.errors.description}</Text>
         </View>
         <View style={styles.formElement}>
           <Text style={styles.formLabel}>Fecha de detección:</Text>
@@ -139,6 +129,7 @@ export default function AddSubstandarCondition() {
               />
             }
           /> */}
+          <Text style={styles.error}>{formik.errors.detectionDate}</Text>
         </View>
         <View style={styles.formElement}>
           <Text style={styles.formLabel}>Responsable:</Text>
@@ -148,9 +139,10 @@ export default function AddSubstandarCondition() {
             placeholder="Responsable"
             onChangeText={(text) => formik.setFieldValue("responsable", text)}
             rightContent={
-              <Ionicons name="person" size={20} color={themeColor.primary700} />
+              <Ionicons name="person" size={20} color={COLORS.primary} />
             }
           />
+          <Text style={styles.error}>{formik.errors.responsable}</Text>
         </View>
         <View style={styles.formElement}>
           <Text style={styles.formLabel}>Plazo:</Text>
@@ -160,6 +152,7 @@ export default function AddSubstandarCondition() {
             placeholder="Plazo"
             onValueChange={(val) => formik.setFieldValue("term", val)}
           />
+          <Text style={styles.error}>{formik.errors.term}</Text>
         </View>
         <View style={styles.formButtons}>
           <View>
@@ -167,12 +160,12 @@ export default function AddSubstandarCondition() {
               text="Salir"
               type="TouchableOpacity"
               onPress={goToSubCon}
-              status="danger"
+              color={COLORS.danger}
               leftContent={
                 <Ionicons
                   name="arrow-back-circle"
                   size={20}
-                  color={themeColor.white}
+                  color={COLORS.white}
                 />
               }
             />
@@ -185,34 +178,19 @@ export default function AddSubstandarCondition() {
               type="TouchableOpacity"
               onPress={formik.handleSubmit}
               // onPress={a}
-              color={themeColor.primary600}
+              color={COLORS.primary}
               rightContent={
                 <Ionicons
                   name="arrow-forward-circle"
                   size={20}
-                  color={themeColor.white}
+                  color={COLORS.white}
                 />
               }
             />
           </View>
         </View>
+        <Text style={styles.error}>{error}</Text>
       </ScrollView>
-      <View style={styles.modalContainer}>
-        <Modal animationType="fade" visible={modalVisible} transparent={true}>
-          <View style={styles.shadow}></View>
-          <View style={styles.positioning}>
-            <View style={styles.modalView}>
-              <Text style={{ marginBottom: 7 }}>
-                No se pueden dejar campos vacíos
-              </Text>
-              <Button
-                text="Entiendo"
-                onPress={() => setModalVisible(!modalVisible)}
-              />
-            </View>
-          </View>
-        </Modal>
-      </View>
     </KeyboardAvoidingView>
   );
 }
@@ -259,34 +237,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  positioning: {
-    top: "40%",
-    left: "30%",
-    position: "absolute",
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  shadow: {
-    flex: 1,
-    backgroundColor: themeColor.primary700,
-    opacity: 0.1,
-  },
-  modalView: {
-    opacity: 2,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 25,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+  error: {
+    color: COLORS.danger,
+    marginTop: 2,
   },
 });

@@ -6,6 +6,7 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
 } from "react-native-gesture-handler";
+import { COLORS } from "../../utils/constants";
 
 export default function ProccesActivitiesHeader() {
   return (
@@ -15,7 +16,7 @@ export default function ProccesActivitiesHeader() {
       </View>
       <View style={styles.addStyle}>
         <TouchableOpacity style={styles.addButton}>
-          <Ionicons name="add-circle" size={20} color={themeColor.white} />
+          <Ionicons name="add-circle" size={20} color={COLORS.white} />
         </TouchableOpacity>
       </View>
     </View>
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
   addButton: {
     height: 40,
     borderRadius: 10,
-    backgroundColor: themeColor.primary600,
+    backgroundColor: COLORS.primary,
     alignItems: "center",
     justifyContent: "center",
   },

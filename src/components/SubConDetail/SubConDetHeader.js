@@ -9,6 +9,7 @@ import {
 } from "react-native-rapi-ui";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
+import { COLORS } from "../../utils/constants";
 
 export default function SubConDetHeader(props) {
   const { responsibleAndDesc } = props;
@@ -24,14 +25,15 @@ export default function SubConDetHeader(props) {
             numberOfLines={2}
             style={styles.text}
           >{`Descripción: ${responsibleAndDesc.description}`}</Text>
-          <Text
-            numberOfLines={1}
-            style={styles.text}
-          >{`Recomendaciones: ${responsibleAndDesc.recommendations}`}</Text>
+          <Text numberOfLines={1} style={styles.text}>{`Recomendaciones: ${
+            responsibleAndDesc.recommendations
+              ? responsibleAndDesc.recommendations
+              : "N/A"
+          }`}</Text>
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.addButton}>
-            <Ionicons name="pencil" size={30} color={themeColor.white} />
+            <Ionicons name="pencil" size={30} color={COLORS.white} />
           </TouchableOpacity>
         </View>
       </SectionContent>
@@ -64,7 +66,7 @@ const styles = StyleSheet.create({
   addButton: {
     height: 70,
     borderRadius: 10,
-    backgroundColor: themeColor.primary600,
+    backgroundColor: COLORS.primary,
     alignItems: "center",
     justifyContent: "center",
   },

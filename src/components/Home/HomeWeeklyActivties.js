@@ -8,7 +8,7 @@ export default function HomeWeeklyActivties(props) {
     <View style={styles.weeklyActivities}>
       <View style={styles.monthlyCounter}>
         <Text style={styles.weeklyText}>Actividades Planificadas del Mes</Text>
-        <Text style={styles.monthlyNumber}>{`${numAct} act. este mes`}</Text>
+        <Text style={styles.monthlyNumber}>{`   (${numAct})`}</Text>
       </View>
       {activities ? (
         <HomeMenuActList activities={activities} />
@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
   },
   monthlyCounter: {
     flexDirection: "row",
-    justifyContent: "space-between",
   },
   weeklyText: {
     marginBottom: 7,

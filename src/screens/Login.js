@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import { Ionicons } from "@expo/vector-icons";
 import useAuth from "../hooks/useAuth";
 import { getUser } from "../api/user";
+import { COLORS } from "../utils/constants";
 
 export default function Login() {
   const [error, setError] = useState("");
@@ -55,7 +56,7 @@ export default function Login() {
           placeholder="Usuario"
           onChangeText={(text) => formik.setFieldValue("username", text)}
           leftContent={
-            <Ionicons name="person" size={20} color={themeColor.primary700} />
+            <Ionicons name="person" size={20} color={COLORS.primary} />
           }
         />
       </View>
@@ -67,11 +68,7 @@ export default function Login() {
           secureTextEntry={true}
           onChangeText={(text) => formik.setFieldValue("password", text)}
           leftContent={
-            <Ionicons
-              name="lock-closed"
-              size={20}
-              color={themeColor.primary700}
-            />
+            <Ionicons name="lock-closed" size={20} color={COLORS.primary} />
           }
         />
       </View>
@@ -80,8 +77,9 @@ export default function Login() {
           text="Iniciar Sesión"
           type="TouchableOpacity"
           onPress={formik.handleSubmit}
+          color={COLORS.primary}
           leftContent={
-            <Ionicons name="log-in" size={20} color={themeColor.white} />
+            <Ionicons name="log-in" size={20} color={COLORS.white} />
           }
         />
       </View>
@@ -113,7 +111,7 @@ const styles = StyleSheet.create({
 
   error: {
     textAlign: "center",
-    color: "#f00",
+    color: COLORS.danger,
     marginTop: 10,
   },
 });

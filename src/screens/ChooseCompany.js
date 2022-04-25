@@ -14,6 +14,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { getCompaniesByUser, getHqByCompany } from "../api/companiesAndHqs";
 import useAuth from "../hooks/useAuth";
+import { COLORS } from "../utils/constants";
 
 export default function ChooseCompany() {
   const { auth, logout } = useAuth();
@@ -125,18 +126,18 @@ export default function ChooseCompany() {
                   <Ionicons
                     name="arrow-back-circle"
                     size={20}
-                    color={themeColor.white}
+                    color={COLORS.white}
                   />
                 }
-                color={themeColor.gray300}
+                color={COLORS.neutral}
               />
             </View>
             <View>
               <Button
                 text="Entrar"
-                color={themeColor.success600}
+                color={COLORS.primary}
                 rightContent={
-                  <Ionicons name="log-in" size={20} color={themeColor.white} />
+                  <Ionicons name="log-in" size={20} color={COLORS.white} />
                 }
                 onPress={formik.handleSubmit}
               />

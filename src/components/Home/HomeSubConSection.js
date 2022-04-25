@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Text } from "react-native-rapi-ui";
+import { Text, themeColor } from "react-native-rapi-ui";
 import HomeMenuItem from "./HomeMenuItem";
 import HomeMenuNumberItem from "./HomeMenuNumberItem";
 import { getDetectedAndClosedCounters } from "../../api/substandardConditions";
 import useAuth from "../../hooks/useAuth";
+import { COLORS } from "../../utils/constants";
 
 export default function HomeSubConSection() {
   const navigation = useNavigation();
@@ -45,9 +46,9 @@ export default function HomeSubConSection() {
         <View style={styles.homeMenuItem}>
           <TouchableOpacity onPress={goToSubCon} activeOpacity={0.5}>
             <HomeMenuNumberItem
-              menuItemName={"Condiciones pendientes"}
+              menuItemName={"Condiciones abiertas"}
               menuItemNumber={detectedCounter}
-              backColor="#ffcd39"
+              backColor={COLORS.danger}
             />
           </TouchableOpacity>
         </View>
@@ -56,7 +57,7 @@ export default function HomeSubConSection() {
             <HomeMenuNumberItem
               menuItemName={"Condiciones cerradas"}
               menuItemNumber={closedCounter}
-              backColor="#ffcd39"
+              backColor={COLORS.success}
             />
           </TouchableOpacity>
         </View>
@@ -65,7 +66,7 @@ export default function HomeSubConSection() {
         <TouchableOpacity onPress={goToAdd} activeOpacity={0.5}>
           <HomeMenuItem
             menuItemName="Agregar Condición Subestándar"
-            backColor="#ffcd39"
+            backColor={COLORS.primary}
             icon="add-circle"
           />
         </TouchableOpacity>

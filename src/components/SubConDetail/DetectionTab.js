@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
   Section,
   SectionContent,
@@ -12,6 +13,8 @@ export default function DetectionTab(props) {
     route: { params },
   } = props;
 
+  const [imageExists, setImageExists] = useState(true);
+
   const firstLetter =
     params.detectionDateAndEvidence.detectionEvidence?.charAt(0);
 
@@ -20,21 +23,39 @@ export default function DetectionTab(props) {
       ? `http://sso.segumedik.com/${params.detectionDateAndEvidence.detectionEvidence}`
       : `${params.detectionDateAndEvidence.detectionEvidence}`;
 
+  useEffect(async () => {
+    await verifyImageExistance();
+  });
+
+  const verifyImageExistance = async () => {
+    try {
+      const response = await fetch(detEvidenceUrl);
+      await response.formData();
+      setImageExists(true);
+    } catch (error) {
+      setImageExists(false);
+    }
+  };
   return (
     <Section style={{ top: 7 }}>
       <SectionContent>
         <Text style={{ fontSize: 18 }}>{`Fecha de detección: ${moment(
           params.detectionDateAndEvidence.detectionDate
         ).format("L")}`}</Text>
-        <Image
-          source={{ uri: detEvidenceUrl }}
-          style={{
-            width: "95%",
-            height: "95%",
-            alignSelf: "center",
-            bottom: -16,
-          }}
-        />
+        {imageExists ? (
+          <Image
+            source={{ uri: detEvidenceUrl }}
+            resizeMode="contain"
+            style={{
+              width: "95%",
+              height: "95%",
+              alignSelf: "center",
+              bottom: -16,
+            }}
+          />
+        ) : (
+          <Text>Imagen no encontrada...</Text>
+        )}
       </SectionContent>
       {/* <SectionImage height={870} source={{ uri: detEvidenceUrl }} /> */}
     </Section>

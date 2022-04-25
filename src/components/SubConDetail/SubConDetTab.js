@@ -4,6 +4,7 @@ import DetectionTab from "./DetectionTab";
 import ClosureTab from "./ClosureTab";
 import { Text } from "react-native-rapi-ui";
 import { StyleSheet } from "react-native";
+import { COLORS } from "../../utils/constants";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -17,6 +18,7 @@ export default function SubConDetTab(props) {
         component={DetectionTab}
         options={{
           tabBarLabel: () => <Text style={{ fontSize: 20 }}>Detección</Text>,
+          tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
         }}
         initialParams={{ detectionDateAndEvidence: detectionDateAndEvidence }}
       />
@@ -25,6 +27,7 @@ export default function SubConDetTab(props) {
         component={ClosureTab}
         options={{
           tabBarLabel: () => <Text style={{ fontSize: 20 }}>Cierre</Text>,
+          tabBarIndicatorStyle: { backgroundColor: COLORS.primary },
         }}
         initialParams={{
           closingDateAndEvidence: closingDateAndEvidence,

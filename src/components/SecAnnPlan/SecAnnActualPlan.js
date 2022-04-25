@@ -8,26 +8,34 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import moment from "moment";
+import { COLORS } from "../../utils/constants";
 
 export default function SecAnnActualPlan(props) {
   const { secAnnPlanDetail, percentage, status } = props;
   const navigation = useNavigation();
   const goToDetail = () => {
-    navigation.navigate("SecAnnPlanDetail");
+    navigation.navigate("SecAnnPlanDetail", secAnnPlanDetail);
   };
   const barStyles = (num) => {
-    // const color = num > 74 ? "#00ac17" : num > 32 ? "#e5e70b" : "#ff3e3e";
     const color =
-      num > 74
-        ? themeColor.success600
+      num > 99
+        ? COLORS.primary
+        : num > 74
+        ? COLORS.success
         : num > 32
-        ? "#ffcd39"
-        : themeColor.danger600;
+        ? COLORS.warning
+        : COLORS.danger;
     return {
       backgroundColor: color,
       width: `${num}%`,
     };
   };
+  moment.updateLocale("es", {
+    longDateFormat: {
+      L: "DD/MM/YYYY",
+    },
+  });
+
   return (
     <TouchableWithoutFeedback onPress={goToDetail}>
       <Section style={styles.headerContainer}>

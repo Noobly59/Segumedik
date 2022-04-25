@@ -6,6 +6,7 @@ import {
   themeColor,
 } from "react-native-rapi-ui";
 import { Ionicons } from "@expo/vector-icons";
+import { COLORS } from "../../utils/constants";
 
 export default function HomeMenuItem(props) {
   const { menuItemName, backColor, icon } = props;
@@ -19,7 +20,7 @@ export default function HomeMenuItem(props) {
           alignItems: "center",
         }}
       >
-        <Ionicons name={`${icon}`} size={25} color={themeColor.black} />
+        <Ionicons name={`${icon}`} size={25} color={COLORS.white} />
 
         <Text style={styles.title}>{menuItemName}</Text>
       </SectionContent>
@@ -31,6 +32,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     textAlign: "center",
+    color: COLORS.white,
     // color: "white",
   },
 });

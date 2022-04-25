@@ -7,7 +7,7 @@ export default function SecAnnPlanItem(props) {
   const { secAnnPlanDetail } = props;
   const navigation = useNavigation();
   const goToDetail = () => {
-    navigation.navigate("SecAnnPlanDetail");
+    navigation.navigate("SecAnnPlanDetail", secAnnPlanDetail);
   };
   console.log(secAnnPlanDetail);
   return (
@@ -28,7 +28,7 @@ export default function SecAnnPlanItem(props) {
                 </Text>
               </View>
               <View>
-                <Text style={styles.secAnnPlanDetail} status={"warning"}>
+                <Text style={styles.secAnnPlanDetail} status="warning">
                   59%
                 </Text>
               </View>

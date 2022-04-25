@@ -1,16 +1,19 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Text, themeColor } from "react-native-rapi-ui";
+import { COLORS } from "../../utils/constants";
 
 export default function SecAnnPlanDetPercentage(props) {
   const { percentage } = props;
   const barStyles = (num) => {
     const color =
-      num > 74
-        ? themeColor.success600
+      num > 99
+        ? COLORS.primary
+        : num > 74
+        ? COLORS.success
         : num > 32
-        ? "#ffcd39"
-        : themeColor.danger600;
+        ? COLORS.warning
+        : COLORS.danger;
     return {
       backgroundColor: color,
       width: `${num}%`,
@@ -19,7 +22,7 @@ export default function SecAnnPlanDetPercentage(props) {
   return (
     <View>
       <View style={styles.title}>
-        <Text>Porcentaje Completado</Text>
+        <Text>Porcentaje de Cumplimiento</Text>
       </View>
       <View style={styles.percentageBarContainer}>
         <View style={styles.barContainer}>

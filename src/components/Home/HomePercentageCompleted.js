@@ -3,6 +3,7 @@ import { View, StyleSheet } from "react-native";
 import { Text, themeColor } from "react-native-rapi-ui";
 import useAuth from "../../hooks/useAuth";
 import { getCompaniesAndHqName } from "../../api/companiesAndHqs";
+import { COLORS } from "../../utils/constants";
 
 export default function HomePercentageCompleted(props) {
   const { percentage } = props;
@@ -23,11 +24,13 @@ export default function HomePercentageCompleted(props) {
   const barStyles = (num) => {
     // const color = num > 74 ? "#00ac17" : num > 32 ? "#e5e70b" : "#ff3e3e";
     const color =
-      num > 74
-        ? themeColor.success600
+      num > 99
+        ? COLORS.primary
+        : num > 74
+        ? COLORS.success
         : num > 32
-        ? "#ffcd39"
-        : themeColor.danger600;
+        ? COLORS.warning
+        : COLORS.danger;
     return {
       backgroundColor: color,
       width: `${num}%`,
@@ -43,7 +46,7 @@ export default function HomePercentageCompleted(props) {
       </View>
       <View style={styles.title}>
         <Text style={{ fontSize: 19, fontWeight: "bold" }}>
-          Porcentaje Completado de Plan Anual
+          Porcentaje de Cumplimiento del Plan Anual
         </Text>
       </View>
       <View style={styles.percentageBarContainer}>

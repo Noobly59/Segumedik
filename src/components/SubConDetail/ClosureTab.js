@@ -12,6 +12,7 @@ import { Image } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import moment from "moment";
 import { getSubConDetail } from "../../api/substandardConditions";
+import { COLORS } from "../../utils/constants";
 
 export default function ClosureTab(props) {
   const {
@@ -23,26 +24,18 @@ export default function ClosureTab(props) {
     navigation.navigate("AddClosingPicture", { id: params.id });
   };
 
-  console.log(params.closingDateAndEvidence.closingEvidence);
+  // console.log(params.closingDateAndEvidence.closingEvidence);
 
-  // const [firstLetter, setFirstLetter] = useState("");
   const [closingEvidenceUrl, setClosingEvidenceUrl] = useState(null);
   const [url, setUrl] = useState(null);
   const [closingDate, setClosingDate] = useState(null);
+  const [imageExists, setImageExists] = useState(true);
+
   useFocusEffect(
     useCallback(() => {
-      // console.log("asdlasd");
       (async () => {
         await loadSubConDetail();
       })();
-      // setFirstLetter(params.closingDateAndEvidence.closingEvidence?.charAt(0));
-      // params.closingDateAndEvidence.closingEvidence
-      //   ? setClosingEvidenceUrl(
-      //       firstLetter !== "h"
-      //         ? `http://sso.segumedik.com/${params.closingDateAndEvidence.closingEvidence}`
-      //         : `${params.closingDateAndEvidence.closingEvidence}`
-      //     )
-      // : setClosingEvidenceUrl(null);
     })
   );
 
@@ -60,16 +53,20 @@ export default function ClosureTab(props) {
       console.log(error);
     }
   };
-  // useEffect(() => {
-  //   console.log("asdasd");
-  //   console.log(url?.charAt(0), closingEvidenceUrl);
-  // });
-  // const firstLetter = params.closingDateAndEvidence.closingEvidence?.charAt(0);
 
-  // const cloEvidenceUrl =
-  //   firstLetter !== "h"
-  //     ? `http://sso.segumedik.com/${params.closingDateAndEvidence.closingEvidence}`
-  //     : `${params.closingDateAndEvidence.closingEvidence}`;
+  useEffect(async () => {
+    await verifyImageExistance();
+  });
+
+  const verifyImageExistance = async () => {
+    try {
+      const response = await fetch(url);
+      await response.formData();
+      setImageExists(true);
+    } catch (error) {
+      setImageExists(false);
+    }
+  };
 
   return (
     <Section style={{ top: 7 }}>
@@ -79,36 +76,33 @@ export default function ClosureTab(props) {
         }`}</Text>
 
         {closingEvidenceUrl ? (
-          <Image
-            source={{ uri: closingEvidenceUrl }}
-            style={{
-              width: "95%",
-              height: "95%",
-              alignSelf: "center",
-              bottom: -16,
-            }}
-          />
+          imageExists ? (
+            <Image
+              source={{ uri: closingEvidenceUrl }}
+              resizeMode="contain"
+              style={{
+                width: "95%",
+                height: "95%",
+                alignSelf: "center",
+                bottom: -16,
+              }}
+            />
+          ) : (
+            <Text>Imagen no encontrada...</Text>
+          )
         ) : (
           <SectionContent>
             <Button
               text="Tomar foto"
               onPress={goToAddClosingPicture}
-              color={themeColor.primary600}
+              color={COLORS.primary}
               rightContent={
-                <Ionicons name="camera" size={30} color={themeColor.white} />
+                <Ionicons name="camera" size={30} color={COLORS.white} />
               }
             />
           </SectionContent>
         )}
       </SectionContent>
-
-      {/* <Button
-          text="Tomar foto"
-          color={themeColor.primary600}
-          rightContent={
-            <Ionicons name="camera" size={20} color={themeColor.white} />
-          }
-        /> */}
     </Section>
   );
 }
