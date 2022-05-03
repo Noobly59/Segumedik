@@ -30,7 +30,7 @@ export default function SecAnnPlanDetPercentage(props) {
             <View style={[styles.tintedBar, barStyles(percentage)]} />
           </View>
         </View>
-        <Text style={styles.percentage}>{`${percentage}%`}</Text>
+        <Text style={styles.percentage}>{`${Math.trunc(percentage)}%`}</Text>
       </View>
     </View>
   );

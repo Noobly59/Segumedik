@@ -1,15 +1,35 @@
-import { View, StyleSheet } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet, ActivityIndicator } from "react-native";
 import { Text, Section } from "react-native-rapi-ui";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { COLORS } from "../../utils/constants";
+import { getPlanCompliance } from "../../api/securityAnnualPlans";
 
 export default function SecAnnPlanItem(props) {
   const { secAnnPlanDetail } = props;
+  const [compliance, setCompliance] = useState(0);
+  const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
   const goToDetail = () => {
     navigation.navigate("SecAnnPlanDetail", secAnnPlanDetail);
   };
-  console.log(secAnnPlanDetail);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await getPlanCompliance(
+          secAnnPlanDetail["annualPlan"]?.id
+        );
+        setCompliance(response[0] ? response[0] : 0);
+        console.log(compliance);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+  // console.log(secAnnPlanDetail);
   return (
     <TouchableWithoutFeedback onPress={goToDetail}>
       <Section style={styles.itemContainer}>
@@ -27,11 +47,19 @@ export default function SecAnnPlanItem(props) {
                   {`${secAnnPlanDetail["annualPlan"].name}`}
                 </Text>
               </View>
-              <View>
-                <Text style={styles.secAnnPlanDetail} status="warning">
-                  59%
-                </Text>
-              </View>
+              {loading ? (
+                <ActivityIndicator
+                  size="large"
+                  style={styles.spinner}
+                  color={COLORS.primary}
+                />
+              ) : (
+                <View>
+                  <Text style={styles.secAnnPlanDetail} status="warning">
+                    {`${Math.trunc(compliance)}%`}
+                  </Text>
+                </View>
+              )}
             </View>
 
             <Text style={styles.secAnnPlanDetail}>
@@ -73,5 +101,8 @@ const styles = StyleSheet.create({
   secAnnPlanDetail: {
     fontSize: 16,
     marginBottom: 5,
+  },
+  spinner: {
+    marginVertical: 10,
   },
 });

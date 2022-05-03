@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ActivityIndicator } from "react-native";
 import { Text, themeColor } from "react-native-rapi-ui";
 import useAuth from "../../hooks/useAuth";
 import { getCompaniesAndHqName } from "../../api/companiesAndHqs";
 import { COLORS } from "../../utils/constants";
+import { getCompliancePercentage } from "../../api/securityAnnualPlans";
 
-export default function HomePercentageCompleted(props) {
-  const { percentage } = props;
+export default function HomePercentageCompleted() {
   const [companyName, setCompanyName] = useState("");
+  const [compliance, setCompliance] = useState("");
   const [hqName, setHqName] = useState("");
+  const [loading, setLoading] = useState(true);
   const { auth } = useAuth();
+
   useEffect(() => {
     (async () => {
       const companyAndHqName = await getCompaniesAndHqName(
@@ -18,9 +21,19 @@ export default function HomePercentageCompleted(props) {
       );
       setCompanyName(companyAndHqName.companyName);
       setHqName(companyAndHqName.hqName);
-      console.log(companyName);
+      const compliancePercentage = await getCompliancePercentage(
+        auth[0].headquarterId
+        // "b1af8100-a7ad-4fd4-8ca5-36ae31721c51"
+      );
+      setCompliance(
+        typeof compliancePercentage[0] !== "undefined"
+          ? compliancePercentage[0]
+          : 0
+      );
+      setLoading(false);
     })();
   }, []);
+
   const barStyles = (num) => {
     // const color = num > 74 ? "#00ac17" : num > 32 ? "#e5e70b" : "#ff3e3e";
     const color =
@@ -33,7 +46,7 @@ export default function HomePercentageCompleted(props) {
         : COLORS.danger;
     return {
       backgroundColor: color,
-      width: `${num}%`,
+      width: `${num ? num : 0}%`,
     };
   };
 
@@ -49,14 +62,22 @@ export default function HomePercentageCompleted(props) {
           Porcentaje de Cumplimiento del Plan Anual
         </Text>
       </View>
-      <View style={styles.percentageBarContainer}>
-        <View style={styles.barContainer}>
-          <View style={styles.fullBar}>
-            <View style={[styles.tintedBar, barStyles(percentage)]} />
+      {loading ? (
+        <ActivityIndicator
+          size="large"
+          style={styles.spinner}
+          color={COLORS.primary}
+        />
+      ) : (
+        <View style={styles.percentageBarContainer}>
+          <View style={styles.barContainer}>
+            <View style={styles.fullBar}>
+              <View style={[styles.tintedBar, barStyles(compliance)]} />
+            </View>
           </View>
+          <Text style={styles.percentage}>{`${Math.trunc(compliance)}%`}</Text>
         </View>
-        <Text style={styles.percentage}>{`${percentage}%`}</Text>
-      </View>
+      )}
     </View>
   );
 }
@@ -96,5 +117,8 @@ const styles = StyleSheet.create({
     // width: "58%",
     height: 20,
     borderRadius: 20,
+  },
+  spinner: {
+    marginVertical: 10,
   },
 });

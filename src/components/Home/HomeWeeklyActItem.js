@@ -8,6 +8,7 @@ import {
 // import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import moment from "moment";
 
 export default function HomeWeeklyActItem(props) {
   const { menuItemName } = props;
@@ -15,6 +16,11 @@ export default function HomeWeeklyActItem(props) {
   const goToSecAnnPlan = () => {
     navigation.navigate("SecAnnPlanNavigation");
   };
+  moment.updateLocale("es", {
+    longDateFormat: {
+      L: "DD/MM/YYYY",
+    },
+  });
   return (
     <TouchableOpacity onPress={goToSecAnnPlan} activeOpacity={0.5}>
       <Section style={styles.container}>
@@ -25,19 +31,17 @@ export default function HomeWeeklyActItem(props) {
             alignItems: "center",
           }}
         >
-          <Ionicons
-            name={`${menuItemName.icon}`}
-            size={30}
-            color={themeColor.black}
-          />
+          <Ionicons name={`logo-tux`} size={30} color={themeColor.black} />
 
           <View style={{ flex: 1 }}>
             <Text numberOfLines={1} style={styles.title}>
-              {menuItemName.actName}
+              {menuItemName["activity"].name}
             </Text>
           </View>
           <View>
-            <Text style={styles.dates}>{menuItemName.date}</Text>
+            <Text style={styles.date}>
+              {moment(menuItemName["activityDate"]).format("L")}
+            </Text>
           </View>
         </SectionContent>
       </Section>

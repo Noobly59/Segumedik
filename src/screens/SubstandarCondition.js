@@ -49,7 +49,7 @@ export default function SubstandarCondition() {
         auth[0].headquarterId,
         firstPageReload ? null : nextUrl
       );
-
+      console.log(response);
       setNextUrl(response.next);
       const subConsArray = [];
       for await (const subCon of response.conditions) {

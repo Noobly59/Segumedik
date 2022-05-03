@@ -1,61 +1,47 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native";
 import HomeMenuItemContainer from "../components/Home/HomeMenuItemContainer";
 import HomePercentageCompleted from "../components/Home/HomePercentageCompleted";
 import HomeSubConSection from "../components/Home/HomeSubConSection";
 import HomeWeeklyActivties from "../components/Home/HomeWeeklyActivties";
 import { getCompaniesAndHqName } from "../api/companiesAndHqs";
-// import useAuth from "../hooks/useAuth";
+import useAuth from "../hooks/useAuth";
+import { getMonthActivities } from "../api/securityAnnualPlans";
 
 export default function Home() {
-  // const { auth } = useAuth();
+  const { auth } = useAuth();
+  const [activities, setActivties] = useState([]);
+  const [count, setCount] = useState(0);
+  const [loading, setLoading] = useState(true);
 
-  const activities = [
-    {
-      id: "1",
-      actName: "Mapa de evacuacion elaboracion-publicacion.",
-      date: " 01/01/2022",
-      icon: "logo-tux",
-    },
-    {
-      id: "2",
-      actName: "Mapa de riesgos elaboracion-publicacion.",
-      date: " 01/01/2022",
-      icon: "logo-tux",
-    },
-    {
-      id: "3",
-      actName: "Charlas de seguridad y medio ambiente.",
-      date: " 01/01/2022",
-      icon: "logo-tux",
-    },
-    {
-      id: "4",
-      actName: "Simulacro de evacuacion.",
-      date: " 01/01/2022",
-      icon: "logo-tux",
-    },
-    {
-      id: "5",
-      actName:
-        "Factores de riesgos (mecánico, físico, quimico, biologico, psicosocial, ergonomico).",
-      date: " 01/01/2022",
-      icon: "logo-tux",
-    },
-    {
-      id: "6",
-      actName: "Índice de Capacitaciones (Entrenamientos).",
-      date: " 01/01/2022",
-      icon: "logo-tux",
-    },
-  ];
+  useEffect(() => {
+    (async () => {
+      await loadActivities();
+    })();
+  }, []);
+
+  const loadActivities = async () => {
+    try {
+      const response = await getMonthActivities(auth[0].headquarterId);
+      setActivties(response[0] ? response["activities"] : []);
+      setCount(response[0] ? response["count"] : 0);
+      setLoading(false);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <HomePercentageCompleted percentage={75} />
+      <HomePercentageCompleted />
       <HomeSubConSection />
       <HomeMenuItemContainer />
-      <HomeWeeklyActivties activities={activities} numAct={23} />
+      <HomeWeeklyActivties
+        activities={activities}
+        numAct={count}
+        loading={loading}
+      />
     </SafeAreaView>
   );
 

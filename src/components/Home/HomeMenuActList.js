@@ -1,4 +1,5 @@
 import { FlatList } from "react-native";
+import { Text } from "react-native-rapi-ui";
 import HomeWeeklyActItem from "./HomeWeeklyActItem";
 
 export default function HomeMenuActList(props) {
@@ -10,6 +11,7 @@ export default function HomeMenuActList(props) {
       showsVerticalScrollIndicator={false}
       keyExtractor={(activity) => String(activity.id)}
       renderItem={({ item }) => <HomeWeeklyActItem menuItemName={item} />}
+      ListEmptyComponent={() => <Text>No hay actividades</Text>}
       onEndReachedThreshold={0.1}
     />
   );

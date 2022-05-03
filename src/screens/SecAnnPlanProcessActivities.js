@@ -1,96 +1,49 @@
-import React, { useState } from "react";
-import { View } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, ActivityIndicator, StyleSheet } from "react-native";
 import { Button, themeColor, Picker } from "react-native-rapi-ui";
+import {
+  getPendingActivities,
+  getProcessedActivities,
+} from "../api/securityAnnualPlans";
 import ProccesActivitiesHeader from "../components/ProcessActivities/ProccesActivitiesHeader";
 import ProcessActPendingList from "../components/ProcessActivities/ProcessActPendingList";
 import ProcessActProcessedList from "../components/ProcessActivities/ProcessActProcessedList";
 import { COLORS } from "../utils/constants";
 
-export default function SecAnnPlanProcessActivities() {
+export default function SecAnnPlanProcessActivities(props) {
   const [pickerValue, setPickerValue] = useState("1");
+  const [pendingActivities, setPendingActivities] = useState([]);
+  const [processedActivities, setProcessedActivities] = useState([]);
+  const [loading, setLoading] = useState(true);
   const items = [
     { label: "Actividades pendientes", value: "1" },
     { label: "Actividades procesadas", value: "2" },
   ];
-
-  const pendingActivities = [
-    {
-      id: "1",
-      actName: "Mapa de evacuacion elaboracion-publicacion.",
-      date: " 01/01/2022",
-      icon: "logo-tux",
-    },
-    {
-      id: "2",
-      actName: "Mapa de riesgos elaboracion-publicacion.",
-      date: " 01/01/2022",
-      icon: "logo-tux",
-    },
-    {
-      id: "3",
-      actName: "Charlas de seguridad y medio ambiente.",
-      date: " 01/01/2022",
-      icon: "logo-tux",
-    },
-    {
-      id: "4",
-      actName: "Simulacro de evacuacion.",
-      date: " 01/01/2022",
-      icon: "logo-tux",
-    },
-    {
-      id: "5",
-      actName:
-        "Factores de riesgos (mecánico, físico, quimico, biologico, psicosocial, ergonomico).",
-      date: " 01/01/2022",
-      icon: "logo-tux",
-    },
-    {
-      id: "6",
-      actName: "Índice de Capacitaciones (Entrenamientos).",
-      date: " 01/01/2022",
-      icon: "logo-tux",
-    },
-  ];
-  const processedActivities = [
-    {
-      id: "1",
-      actName: "Mapa de evacuacion elaboracion-publicacion.",
-      date: " 01/01/2022",
-      icon: "logo-tux",
-    },
-    {
-      id: "2",
-      actName: "Mapa de riesgos elaboracion-publicacion.",
-      date: " 01/01/2022",
-      icon: "logo-tux",
-    },
-    {
-      id: "3",
-      actName: "Charlas de seguridad y medio ambiente.",
-      date: " 01/01/2022",
-      icon: "logo-tux",
-    },
-    {
-      id: "4",
-      actName: "Simulacro de evacuacion.",
-      date: " 01/01/2022",
-      icon: "logo-tux",
-    },
-    {
-      id: "5",
-      actName:
-        "Factores de riesgos (mecánico, físico, quimico, biologico, psicosocial, ergonomico).",
-      date: " 01/01/2022",
-      icon: "logo-tux",
-    },
-    {
-      id: "6",
-      actName: "Índice de Capacitaciones (Entrenamientos).",
-      date: " 01/01/2022",
-      icon: "logo-tux",
-    },
-  ];
+  const {
+    route: { params },
+  } = props;
+  useEffect(() => {
+    (async () => {
+      await loadPendingAndProcessedActivities();
+    })();
+  }, []);
+  const loadPendingAndProcessedActivities = async () => {
+    try {
+      const pending = await getPendingActivities(
+        params.planId,
+        params.month,
+        params.reportId
+      );
+      const processed = await getProcessedActivities(params.reportId);
+      console.log(pending);
+      setPendingActivities(pending[0] ? pending : []);
+      setProcessedActivities(processed[0] ? processed : []);
+      setLoading(false);
+      console.log(pendingActivities);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <View
       style={{
@@ -110,8 +63,18 @@ export default function SecAnnPlanProcessActivities() {
       <View style={{ flex: 20 }}>
         {pickerValue === "1" ? (
           <View style={{ flex: 1 }}>
-            <ProccesActivitiesHeader />
-            <ProcessActPendingList pendingActivities={pendingActivities} />
+            {loading ? (
+              <ActivityIndicator
+                size="large"
+                style={styles.spinner}
+                color={COLORS.primary}
+              />
+            ) : (
+              <>
+                <ProccesActivitiesHeader />
+                <ProcessActPendingList pendingActivities={pendingActivities} />
+              </>
+            )}
           </View>
         ) : (
           <View style={{ flex: 1 }}>
@@ -156,3 +119,9 @@ export default function SecAnnPlanProcessActivities() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  spinner: {
+    marginVertical: 10,
+  },
+});

@@ -1,19 +1,24 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ActivityIndicator } from "react-native";
 import { Text } from "react-native-rapi-ui";
 import HomeMenuActList from "./HomeMenuActList";
+import { COLORS } from "../../utils/constants";
 
 export default function HomeWeeklyActivties(props) {
-  const { activities, numAct } = props;
+  const { activities, numAct, loading } = props;
   return (
     <View style={styles.weeklyActivities}>
       <View style={styles.monthlyCounter}>
         <Text style={styles.weeklyText}>Actividades Planificadas del Mes</Text>
         <Text style={styles.monthlyNumber}>{`   (${numAct})`}</Text>
       </View>
-      {activities ? (
-        <HomeMenuActList activities={activities} />
+      {loading ? (
+        <ActivityIndicator
+          size="large"
+          style={styles.spinner}
+          color={COLORS.primary}
+        />
       ) : (
-        <Text>No ahi</Text>
+        <HomeMenuActList activities={activities} />
       )}
     </View>
   );
@@ -38,5 +43,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     alignSelf: "center",
     fontSize: 17,
+  },
+  spinner: {
+    marginVertical: 10,
   },
 });

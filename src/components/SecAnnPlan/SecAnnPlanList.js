@@ -4,7 +4,6 @@ import {
   LayoutAnimation,
   Platform,
   UIManager,
-  StyleSheet,
   View,
 } from "react-native";
 import { Text, SectionContent } from "react-native-rapi-ui";

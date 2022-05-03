@@ -9,12 +9,17 @@ import { useNavigation } from "@react-navigation/native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../../utils/constants";
+import moment from "moment";
 
 export default function SecAnnPlanDetListItem(props) {
-  const { monthItem, percentage, color, textColor } = props;
+  const { planId, monthItem } = props;
   const navigation = useNavigation();
   const goToProcessActivities = () => {
-    navigation.navigate("SecAnnPlanProcessActivities");
+    navigation.navigate("SecAnnPlanProcessActivities", {
+      planId: planId,
+      month: moment(monthItem["report"].reportDate).format("M"),
+      reportId: monthItem["report"].reportId,
+    });
   };
   const barStyles = (num) => {
     const color =
@@ -30,6 +35,7 @@ export default function SecAnnPlanDetListItem(props) {
       width: `${num}%`,
     };
   };
+
   const countAndMonthColor = (num) => {
     var color = "";
     switch (num) {
@@ -42,24 +48,81 @@ export default function SecAnnPlanDetListItem(props) {
     }
     return color;
   };
+  moment.updateLocale("es", {
+    months:
+      "Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre".split(
+        "_"
+      ),
+    monthsShort:
+      "Ene._Feb._Mar._Abr._May._Jun._Jul._Ago._Sep._Oct._Nov._Dic.".split("_"),
+  });
   return (
     <TouchableWithoutFeedback
       style={styles.itemContainer}
       onPress={goToProcessActivities}
     >
       <Section style={{ flex: 1 }}>
-        <SectionContent style={[styles.container, { backgroundColor: color }]}>
+        <SectionContent
+          style={[
+            styles.container,
+            {
+              backgroundColor:
+                moment(monthItem["report"].reportDate).isBefore() &&
+                monthItem["report"].status === 0
+                  ? COLORS.warning
+                  : moment(monthItem["report"].reportDate).isBefore() &&
+                    monthItem["report"].status !== 0
+                  ? COLORS.success
+                  : COLORS.white,
+            },
+          ]}
+        >
           <View>
-            <Text status={countAndMonthColor(textColor)}>{monthItem}</Text>
+            <Text
+              status={countAndMonthColor(
+                moment(monthItem["report"].reportDate).isBefore() &&
+                  monthItem["report"].status === 0
+                  ? 1
+                  : moment(monthItem["report"].reportDate).isBefore() &&
+                    monthItem["report"].status !== 0
+                  ? 1
+                  : 0
+              )}
+            >
+              {moment(monthItem["report"].reportDate).format("MMMM")}
+            </Text>
           </View>
 
           <View style={styles.infoTextContainer}>
             <View style={styles.barContainer}>
               <View style={styles.fullBar}>
-                <View style={[styles.tintedBar, barStyles(percentage)]} />
+                <View
+                  style={[
+                    styles.tintedBar,
+                    barStyles(
+                      monthItem["pendingActivities"] > 0
+                        ? (monthItem["processedActivities"] /
+                            monthItem["pendingActivities"]) *
+                            100
+                        : 0
+                    ),
+                  ]}
+                />
               </View>
             </View>
-            <Text status={countAndMonthColor(textColor)}>5/7</Text>
+            <Text
+              status={countAndMonthColor(
+                moment(monthItem["report"].reportDate).isBefore() &&
+                  monthItem["report"].status === 0
+                  ? 1
+                  : moment(monthItem["report"].reportDate).isBefore() &&
+                    monthItem["report"].status !== 0
+                  ? 1
+                  : 0
+              )}
+            >
+              {`${monthItem["processedActivities"]}/${monthItem["pendingActivities"]}`}
+            </Text>
 
             <Ionicons name="chevron-forward" size={25} color={COLORS.primary} />
           </View>
@@ -72,21 +135,20 @@ export default function SecAnnPlanDetListItem(props) {
 const styles = StyleSheet.create({
   itemContainer: {
     marginVertical: 3,
+    marginHorizontal: 7,
   },
   container: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
   },
   infoTextContainer: {
     alignItems: "center",
     justifyContent: "flex-end",
     flexDirection: "row",
+    marginStart: "auto",
   },
-
   barContainer: {
     flexDirection: "row",
-    alignItems: "center",
     right: -40,
   },
   fullBar: {

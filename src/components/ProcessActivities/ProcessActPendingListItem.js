@@ -7,14 +7,17 @@ import {
 } from "react-native-rapi-ui";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-
+import moment from "moment";
+moment.updateLocale("es", {
+  longDateFormat: {
+    L: "DD/MM/YYYY",
+  },
+});
 export default function ProcessActPendingListItem(props) {
   const { activity } = props;
   return (
-    <TouchableWithoutFeedback
-    // onPress={goToSecAnnPlan}
-    >
-      <Section style={styles.container}>
+    <TouchableWithoutFeedback style={styles.weeklyActivities}>
+      <Section>
         <SectionContent
           style={{
             flexDirection: "row",
@@ -22,19 +25,20 @@ export default function ProcessActPendingListItem(props) {
             alignItems: "center",
           }}
         >
-          <Ionicons
-            name={`${activity.icon}`}
-            size={20}
-            color={themeColor.black}
-          />
+          <Ionicons name={`logo-tux`} size={20} color={themeColor.black} />
 
           <View style={{ flex: 1 }}>
             <Text numberOfLines={1} style={styles.title}>
-              {activity.actName}
+              {activity["activity"].name.charAt(0).toUpperCase() +
+                activity["activity"].name.slice(1).toLowerCase()}
             </Text>
           </View>
           <View>
-            <Text style={styles.dates}>{activity.date}</Text>
+            <Text style={styles.dates}>
+              {activity["activityDate"]
+                ? moment(activity["activityDate"]).format("L")
+                : ""}
+            </Text>
           </View>
         </SectionContent>
       </Section>
@@ -44,9 +48,8 @@ export default function ProcessActPendingListItem(props) {
 
 const styles = StyleSheet.create({
   weeklyActivities: {
-    paddingHorizontal: 12,
-    marginTop: 5,
-    flex: 1,
+    marginVertical: 5,
+    paddingHorizontal: 10,
   },
   monthlyCounter: {
     flexDirection: "row",

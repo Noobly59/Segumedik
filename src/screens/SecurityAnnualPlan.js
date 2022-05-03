@@ -4,7 +4,7 @@ import { View, ActivityIndicator, StyleSheet } from "react-native";
 import SecAnnPlanList from "../components/SecAnnPlan/SecAnnPlanList";
 import SecAnnActualPlan from "../components/SecAnnPlan/SecAnnActualPlan";
 import { themeColor, Text } from "react-native-rapi-ui";
-import { getAnnualPlan } from "../api/securityAnnualPlans";
+import { getAnnualPlans } from "../api/securityAnnualPlans";
 import useAuth from "../hooks/useAuth";
 import { COLORS } from "../utils/constants";
 
@@ -17,13 +17,13 @@ export default function SecurityAnnualPlan() {
 
   useEffect(() => {
     (async () => {
-      await loadAnnualPLans();
+      await loadAnnualPlans();
     })();
   }, []);
 
-  const loadAnnualPLans = async () => {
+  const loadAnnualPlans = async () => {
     try {
-      const response = await getAnnualPlan(auth[0].headquarterId);
+      const response = await getAnnualPlans(auth[0].headquarterId);
       setAnnualPlans(response);
       setActualPlan(response[0]);
       setLoading(false);

@@ -1,4 +1,5 @@
-import { View, StyleSheet } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet, ActivityIndicator } from "react-native";
 import {
   Text,
   Section,
@@ -9,13 +10,33 @@ import { useNavigation } from "@react-navigation/native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import moment from "moment";
 import { COLORS } from "../../utils/constants";
+import { getPlanCompliance } from "../../api/securityAnnualPlans";
 
 export default function SecAnnActualPlan(props) {
   const { secAnnPlanDetail, percentage, status } = props;
+  const [compliance, setCompliance] = useState(0);
+  const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
+
   const goToDetail = () => {
     navigation.navigate("SecAnnPlanDetail", secAnnPlanDetail);
   };
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await getPlanCompliance(
+          secAnnPlanDetail["annualPlan"]?.id
+        );
+        setCompliance(response[0] ? response[0] : 0);
+        console.log(compliance);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
   const barStyles = (num) => {
     const color =
       num > 99
@@ -30,6 +51,7 @@ export default function SecAnnActualPlan(props) {
       width: `${num}%`,
     };
   };
+
   moment.updateLocale("es", {
     longDateFormat: {
       L: "DD/MM/YYYY",
@@ -58,17 +80,24 @@ export default function SecAnnActualPlan(props) {
               .add(1, "y")
               .format("L")}`}</Text>
           </View>
-          <View style={styles.percentageBarContainer}>
-            <View style={styles.barContainer}>
-              <View style={styles.fullBar}>
-                <View style={[styles.tintedBar, barStyles(percentage)]} />
+          {loading ? (
+            <ActivityIndicator
+              size="large"
+              style={styles.spinner}
+              color={COLORS.primary}
+            />
+          ) : (
+            <View style={styles.percentageBarContainer}>
+              <View style={styles.barContainer}>
+                <View style={styles.fullBar}>
+                  <View style={[styles.tintedBar, barStyles(compliance)]} />
+                </View>
               </View>
+              <Text style={styles.percentage} status={status}>{`${Math.trunc(
+                compliance
+              )}%`}</Text>
             </View>
-            <Text
-              style={styles.percentage}
-              status={status}
-            >{`${percentage}%`}</Text>
-          </View>
+          )}
         </SectionContent>
       </Section>
     </TouchableWithoutFeedback>
@@ -116,5 +145,8 @@ const styles = StyleSheet.create({
     // width: "58%",
     height: 12,
     borderRadius: 20,
+  },
+  spinner: {
+    marginVertical: 10,
   },
 });
