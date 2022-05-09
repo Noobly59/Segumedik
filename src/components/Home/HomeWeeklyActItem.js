@@ -40,7 +40,9 @@ export default function HomeWeeklyActItem(props) {
           </View>
           <View>
             <Text style={styles.date}>
-              {moment(menuItemName["activityDate"]).format("L")}
+              {menuItemName["activityDate"]
+                ? moment(menuItemName["activityDate"]).format("L")
+                : ""}
             </Text>
           </View>
         </SectionContent>

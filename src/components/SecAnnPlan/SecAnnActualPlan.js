@@ -64,7 +64,9 @@ export default function SecAnnActualPlan(props) {
         <SectionContent>
           <View style={styles.textContainer}>
             <Text style={styles.text}>
-              {secAnnPlanDetail["annualPlan"]?.name}
+              {secAnnPlanDetail["annualPlan"]?.name != ""
+                ? secAnnPlanDetail["annualPlan"]?.name
+                : `Cronograma de actividades ${secAnnPlanDetail["annualPlan"]?.year}`}
             </Text>
             <Text
               style={styles.text}

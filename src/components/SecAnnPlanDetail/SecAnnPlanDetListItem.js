@@ -15,7 +15,7 @@ export default function SecAnnPlanDetListItem(props) {
   const { planId, monthItem } = props;
   const navigation = useNavigation();
   const goToProcessActivities = () => {
-    navigation.navigate("SecAnnPlanProcessActivities", {
+    navigation.navigate("ProcessActivityNavigation", {
       planId: planId,
       month: moment(monthItem["report"].reportDate).format("M"),
       reportId: monthItem["report"].reportId,

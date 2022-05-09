@@ -35,11 +35,9 @@ export default function SecAnnPlanProcessActivities(props) {
         params.reportId
       );
       const processed = await getProcessedActivities(params.reportId);
-      console.log(pending);
       setPendingActivities(pending[0] ? pending : []);
       setProcessedActivities(processed[0] ? processed : []);
       setLoading(false);
-      console.log(pendingActivities);
     } catch (error) {
       console.log(error);
     }
@@ -72,7 +70,10 @@ export default function SecAnnPlanProcessActivities(props) {
             ) : (
               <>
                 <ProccesActivitiesHeader />
-                <ProcessActPendingList pendingActivities={pendingActivities} />
+                <ProcessActPendingList
+                  pendingActivities={pendingActivities}
+                  reportId={params.reportId}
+                />
               </>
             )}
           </View>

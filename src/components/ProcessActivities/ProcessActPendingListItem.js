@@ -5,18 +5,42 @@ import {
   Text,
   themeColor,
 } from "react-native-rapi-ui";
-import { Ionicons } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import moment from "moment";
-moment.updateLocale("es", {
-  longDateFormat: {
-    L: "DD/MM/YYYY",
-  },
-});
+import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
+
 export default function ProcessActPendingListItem(props) {
-  const { activity } = props;
+  const { activity, reportId } = props;
+  const navigation = useNavigation();
+
+  const goToProcess = () => {
+    switch (activity["activity"].category) {
+      case 7:
+        navigation.navigate("ProcessTalk", {
+          planActivityId: activity["planActivityId"],
+          reportId: reportId,
+        });
+        break;
+      case 11:
+        navigation.navigate("ProcessTalk", {
+          planActivityId: activity["planActivityId"],
+          reportId: reportId,
+        });
+        break;
+    }
+  };
+
+  moment.updateLocale("es", {
+    longDateFormat: {
+      L: "DD/MM/YYYY",
+    },
+  });
   return (
-    <TouchableWithoutFeedback style={styles.weeklyActivities}>
+    <TouchableWithoutFeedback
+      style={styles.weeklyActivities}
+      onPress={goToProcess}
+    >
       <Section>
         <SectionContent
           style={{

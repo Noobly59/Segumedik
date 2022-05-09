@@ -10,6 +10,7 @@ export default function ProcessActProcessedList(props) {
     <FlatList
       data={processedActivities}
       numColumn={1}
+      keyExtractor={(activity) => String(activity.processedActivity.id)}
       showsVerticalScrollIndicator={false}
       renderItem={({ item }) => <ProcessActProcessedListItem activity={item} />}
       onEndReachedThreshold={0.1}

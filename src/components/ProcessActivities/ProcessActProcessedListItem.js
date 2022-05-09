@@ -8,13 +8,15 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import moment from "moment";
-moment.updateLocale("es", {
-  longDateFormat: {
-    L: "DD/MM/YYYY",
-  },
-});
+
 export default function ProcessActProcessedListItem(props) {
   const { activity } = props;
+  console.log(activity);
+  moment.updateLocale("es", {
+    longDateFormat: {
+      L: "DD/MM/YYYY",
+    },
+  });
   return (
     <TouchableWithoutFeedback style={styles.weeklyActivities}>
       <Section>

@@ -4,24 +4,18 @@ import { Text, themeColor } from "react-native-rapi-ui";
 import { map } from "lodash";
 
 export default function ProcessActPendingList(props) {
-  const { pendingActivities } = props;
+  const { pendingActivities, reportId } = props;
   return (
     <FlatList
       data={pendingActivities}
       numColumn={1}
+      keyExtractor={(activity) => String(activity["activity"].activityId)}
       showsVerticalScrollIndicator={false}
-      renderItem={({ item }) => <ProcessActPendingListItem activity={item} />}
+      renderItem={({ item }) => (
+        <ProcessActPendingListItem activity={item} reportId={reportId} />
+      )}
       onEndReachedThreshold={0.1}
       ListEmptyComponent={() => <Text>No hay actividades</Text>}
     />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 10,
-    marginVertical: 3,
-  },
-
-  listItem: { marginVertical: 5 },
-});

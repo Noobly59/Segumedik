@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SecurityAnnualPlan from "../screens/SecurityAnnualPlan";
 import SecAnnPlanDetail from "../screens/SecAnnPlanDetail";
-import SecAnnPlanProcessActivities from "../screens/SecAnnPlanProcessActivities";
+import ProcessActivityNavigation from "./ProcessActivityNavigation";
 
 const Stack = createNativeStackNavigator();
 
@@ -19,8 +19,8 @@ export default function SecAnnPlanNavigation() {
         options={{ title: "", headerShown: false }}
       />
       <Stack.Screen
-        name="SecAnnPlanProcessActivities"
-        component={SecAnnPlanProcessActivities}
+        name="ProcessActivityNavigation"
+        component={ProcessActivityNavigation}
         options={{ title: "", headerShown: false }}
       />
     </Stack.Navigator>

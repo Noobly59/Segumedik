@@ -8,7 +8,7 @@ export default function HomeWeeklyActivties(props) {
   return (
     <View style={styles.weeklyActivities}>
       <View style={styles.monthlyCounter}>
-        <Text style={styles.weeklyText}>Actividades Planificadas del Mes</Text>
+        <Text style={styles.weeklyText}>Actividades Pendientes del Mes</Text>
         <Text style={styles.monthlyNumber}>{`   (${numAct})`}</Text>
       </View>
       {loading ? (

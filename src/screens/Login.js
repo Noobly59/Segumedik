@@ -60,7 +60,7 @@ export default function Login() {
           }
         />
       </View>
-      <View style={styles.container}>
+      {/* <View style={styles.container}>
         <TextInput
           placeholder="Contraseña"
           autoCapitalize="none"
@@ -85,7 +85,7 @@ export default function Login() {
       </View>
       <Text style={styles.error}>{formik.errors.username}</Text>
       <Text style={styles.error}>{formik.errors.password}</Text>
-      <Text style={styles.error}>{error}</Text>
+      <Text style={styles.error}>{error}</Text> */}
     </>
   );
 }
