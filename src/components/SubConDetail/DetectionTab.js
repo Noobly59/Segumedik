@@ -23,8 +23,8 @@ export default function DetectionTab(props) {
       ? `http://sso.segumedik.com/${params.detectionDateAndEvidence.detectionEvidence}`
       : `${params.detectionDateAndEvidence.detectionEvidence}`;
 
-  useEffect(async () => {
-    await verifyImageExistance();
+  useEffect(() => {
+    verifyImageExistance();
   });
 
   const verifyImageExistance = async () => {

@@ -56,8 +56,8 @@ export default function ClosureTab(props) {
     }
   };
 
-  useEffect(async () => {
-    await verifyImageExistance();
+  useEffect(() => {
+    verifyImageExistance();
   });
 
   const verifyImageExistance = async () => {
