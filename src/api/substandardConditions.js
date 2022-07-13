@@ -3,6 +3,7 @@ import { API_HOST } from "../utils/constants";
 export async function getSubCons(hqId, endpointUrl) {
   try {
     const url = `${API_HOST}/api/SubstandardConditions/${hqId}`;
+    // console.log(url);
     const response = await fetch(endpointUrl || url);
     const result = await response.json();
     return result;
@@ -14,6 +15,7 @@ export async function getSubCons(hqId, endpointUrl) {
 export async function getSubConDetail(subConId) {
   try {
     const url = `${API_HOST}/api/SubstandardConditions/condition/${subConId}`;
+    // console.log(url);
     const response = await fetch(url);
     const result = await response.json();
     return result;
@@ -32,6 +34,7 @@ export async function getDetectedAndClosedCounters(hqId) {
     throw error;
   }
 }
+
 export async function saveSubCondition(condition) {
   try {
     const url = `${API_HOST}/api/SubstandardConditions`;

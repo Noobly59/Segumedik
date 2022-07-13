@@ -58,7 +58,7 @@ export default function HomePercentageCompleted() {
         </Text>
       </View>
       <View style={styles.title}>
-        <Text style={{ fontSize: 19, fontWeight: "bold" }}>
+        <Text style={{ fontSize: 18, fontWeight: "bold" }}>
           Porcentaje de Cumplimiento del Plan Anual
         </Text>
       </View>
@@ -84,7 +84,7 @@ export default function HomePercentageCompleted() {
 
 const styles = StyleSheet.create({
   percentageContainer: {
-    marginVertical: 15,
+    marginVertical: 12,
     marginBottom: 7,
   },
   title: {
@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
   percentageBarContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
+    marginRight: 30,
   },
   barContainer: {
     paddingHorizontal: 12,

@@ -59,7 +59,7 @@ export default function HomeNavigation() {
         <Drawer.Screen
           name="SecAnnPlanNavigation"
           component={SecAnnPlanNavigation}
-          options={{ title: "Plan de vigilancia" }}
+          options={{ title: "Cronograma de Gestión Anual" }}
         ></Drawer.Screen>
       </Drawer.Navigator>
     </>

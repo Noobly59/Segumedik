@@ -2,6 +2,7 @@ import React from "react";
 import SubConDetHeader from "../components/SubConDetail/SubConDetHeader";
 import SubConDetTab from "../components/SubConDetail/SubConDetTab";
 import SubConDetFooter from "../components/SubConDetail/SubConDetFooter";
+import { SafeAreaView } from "react-native";
 
 export default function SubConDetail(props) {
   const {
@@ -29,7 +30,7 @@ export default function SubConDetail(props) {
         }}
         id={params.conditionId}
       />
-      <SubConDetFooter />
+      <SubConDetFooter style={{ marginTop: "auto" }} />
     </>
   );
 }

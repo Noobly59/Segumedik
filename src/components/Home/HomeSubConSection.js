@@ -77,7 +77,7 @@ export default function HomeSubConSection() {
 
 const styles = StyleSheet.create({
   homeMenuInfoContainer: {
-    marginVertical: 20,
+    marginVertical: 15,
     flexDirection: "column",
     paddingHorizontal: 12,
   },

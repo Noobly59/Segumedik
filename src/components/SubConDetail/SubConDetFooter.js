@@ -10,7 +10,7 @@ export default function SubConDetFooter() {
     navigation.navigate("SubstandarCondition");
   };
   return (
-    <View style={{ top: -7, paddingHorizontal: 5 }}>
+    <View style={{ margin: 5 }}>
       <Button
         text="Volver"
         color={COLORS.primary}

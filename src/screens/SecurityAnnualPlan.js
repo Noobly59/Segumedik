@@ -12,6 +12,7 @@ export default function SecurityAnnualPlan() {
   const [annualPlans, setAnnualPlans] = useState([]);
   const [actualPlan, setActualPlan] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [plansIsEmpty, setPlansIsEmpty] = useState(false);
 
   const { auth } = useAuth();
 
@@ -24,39 +25,19 @@ export default function SecurityAnnualPlan() {
   const loadAnnualPlans = async () => {
     try {
       const response = await getAnnualPlans(auth[0].headquarterId);
-      setAnnualPlans(response);
-      setActualPlan(response[0]);
+      response[0]
+        ? (setActualPlan(response[0]),
+          response.splice(0, 1),
+          setAnnualPlans(response),
+          setPlansIsEmpty(false))
+        : setPlansIsEmpty(true);
       setLoading(false);
-      // console.log("lihlsdvjk", actualPlan["annualPlan"].name);
     } catch (error) {
       setLoading(false);
       console.log(error);
     }
   };
 
-  // const annualPlans = [
-  //   {
-  //     title: "Cronograma de Actividades del Año 2021",
-  //     id: "0",
-  //   },
-  //   {
-  //     title: "Cronograma de Actividades del Año 2020",
-  //     id: "1",
-  //   },
-  //   {
-  //     title: "Cronograma de Actividades del Año 2019",
-  //     id: "2",
-  //   },
-  //   {
-  //     title: "Cronograma de Actividades del Año 2018",
-  //     id: "3",
-  //   },
-  //   {
-  //     title: "Cronograma de Actividades del Año 2017",
-  //     id: "4",
-  //   },
-  // ];
-  // const actualPlan = ["Cronograma de Actividades del Año 2022"];
   return (
     <>
       {/* <SecAnnPlanYearPicker /> */}
@@ -68,12 +49,14 @@ export default function SecurityAnnualPlan() {
         />
       ) : typeof actualPlan !== "undefined" ? (
         <>
-          <SecAnnActualPlan
-            secAnnPlanDetail={actualPlan}
-            percentage={95}
-            status="success"
-            isLoading={loading}
-          />
+          {plansIsEmpty ? (
+            <></>
+          ) : (
+            <SecAnnActualPlan
+              secAnnPlanDetail={actualPlan}
+              isLoading={loading}
+            />
+          )}
           <SecAnnPlanList annualPlans={annualPlans} isLoading={loading} />
           <View
             style={{
@@ -83,7 +66,7 @@ export default function SecurityAnnualPlan() {
           />
         </>
       ) : (
-        <Text>asdasdasd</Text>
+        <Text></Text>
       )}
     </>
   );

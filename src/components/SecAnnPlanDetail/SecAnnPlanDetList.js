@@ -4,7 +4,7 @@ import SecAnnPlanDetListItem from "./SecAnnPlanDetListItem";
 import { Text } from "react-native-rapi-ui";
 
 export default function SecAnnPlanDetList(props) {
-  const { planId, monthlyReports } = props;
+  const { planId, planYear, monthlyReports } = props;
   // const months = [
   //   {
   //     id: "1",
@@ -96,9 +96,13 @@ export default function SecAnnPlanDetList(props) {
       data={monthlyReports}
       numColumns={1}
       showsVerticalScrollIndicator={false}
-      keyExtractor={(report) => String(report["report"].reportId)}
+      keyExtractor={(report) => String(report.id)}
       renderItem={({ item }) => (
-        <SecAnnPlanDetListItem planId={planId} monthItem={item} />
+        <SecAnnPlanDetListItem
+          planId={planId}
+          monthItem={item}
+          planYear={planYear}
+        />
       )}
       ListEmptyComponent={() => <Text>No hay condiciones</Text>}
     />

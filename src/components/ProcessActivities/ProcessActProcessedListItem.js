@@ -5,21 +5,50 @@ import {
   Text,
   themeColor,
 } from "react-native-rapi-ui";
-import { Ionicons } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import moment from "moment";
+import { COLORS } from "../../utils/constants";
 
 export default function ProcessActProcessedListItem(props) {
   const { activity } = props;
-  console.log(activity);
+  // console.log(activity);
   moment.updateLocale("es", {
     longDateFormat: {
       L: "DD/MM/YYYY",
     },
   });
+  const barStyles = (num) => {
+    let color = "";
+    switch (num) {
+      case 1:
+        color = COLORS.success;
+        break;
+      case 2:
+        color = COLORS.success;
+        break;
+      case 3:
+        color = COLORS.warning;
+        break;
+      case 4:
+        color = COLORS.danger;
+        break;
+      default:
+        color = COLORS.neutral;
+    }
+    return {
+      borderLeftColor: color,
+    };
+  };
   return (
     <TouchableWithoutFeedback style={styles.weeklyActivities}>
-      <Section>
+      <Section
+        style={[
+          {
+            borderLeftWidth: 3,
+          },
+          barStyles(activity["processedActivity"].status),
+        ]}
+      >
         <SectionContent
           style={{
             flexDirection: "row",
@@ -27,8 +56,6 @@ export default function ProcessActProcessedListItem(props) {
             alignItems: "center",
           }}
         >
-          <Ionicons name={`logo-tux`} size={20} color={themeColor.black} />
-
           <View style={{ flex: 1 }}>
             <Text numberOfLines={1} style={styles.title}>
               {activity["name"].charAt(0).toUpperCase() +

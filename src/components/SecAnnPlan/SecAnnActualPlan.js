@@ -13,7 +13,7 @@ import { COLORS } from "../../utils/constants";
 import { getPlanCompliance } from "../../api/securityAnnualPlans";
 
 export default function SecAnnActualPlan(props) {
-  const { secAnnPlanDetail, percentage, status } = props;
+  const { secAnnPlanDetail } = props;
   const [compliance, setCompliance] = useState(0);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
@@ -28,8 +28,10 @@ export default function SecAnnActualPlan(props) {
         const response = await getPlanCompliance(
           secAnnPlanDetail["annualPlan"]?.id
         );
+        // console.log(secAnnPlanDetail["annualPlan"]?.id);
+        // console.log(response[0]);
         setCompliance(response[0] ? response[0] : 0);
-        console.log(compliance);
+        // console.log(compliance);
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -50,6 +52,16 @@ export default function SecAnnActualPlan(props) {
       backgroundColor: color,
       width: `${num}%`,
     };
+  };
+
+  const percentageTextColor = (num) => {
+    var color = "";
+    num > 74
+      ? (color = "success")
+      : num > 32
+      ? (color = "warning")
+      : (color = "danger");
+    return color;
   };
 
   moment.updateLocale("es", {
@@ -95,9 +107,10 @@ export default function SecAnnActualPlan(props) {
                   <View style={[styles.tintedBar, barStyles(compliance)]} />
                 </View>
               </View>
-              <Text style={styles.percentage} status={status}>{`${Math.trunc(
-                compliance
-              )}%`}</Text>
+              <Text
+                style={styles.percentage}
+                status={percentageTextColor(compliance)}
+              >{`${Math.trunc(compliance)}%`}</Text>
             </View>
           )}
         </SectionContent>

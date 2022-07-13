@@ -9,10 +9,14 @@ export default function ProcessActPendingList(props) {
     <FlatList
       data={pendingActivities}
       numColumn={1}
-      keyExtractor={(activity) => String(activity["activity"].activityId)}
+      keyExtractor={(activity) => String(activity.activityId)}
       showsVerticalScrollIndicator={false}
       renderItem={({ item }) => (
-        <ProcessActPendingListItem activity={item} reportId={reportId} />
+        <ProcessActPendingListItem
+          activity={item}
+          reportId={reportId}
+          // refresh={refresh}
+        />
       )}
       onEndReachedThreshold={0.1}
       ListEmptyComponent={() => <Text>No hay actividades</Text>}

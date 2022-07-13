@@ -25,12 +25,11 @@ import useAuth from "../hooks/useAuth";
 import { COLORS } from "../utils/constants";
 import { cancelReportActivity } from "../api/securityAnnualPlans";
 
-export default function ProcessTalk(props) {
+export default function ProcessActivities(props) {
   const navigation = useNavigation();
   const [error, setError] = useState("");
-  const { auth } = useAuth();
-
   const [loading, setLoading] = useState(false);
+  const { auth } = useAuth();
 
   const {
     route: { params },
@@ -38,10 +37,10 @@ export default function ProcessTalk(props) {
 
   const formik = useFormik({
     initialValues: initialValues(),
-    validationSchema: Yup.object(validationSchema()),
+    validationSchema: Yup.object(validationSchema(params.category)),
     validateOnChange: false,
     onSubmit: (formValue) => {
-      const { theme, guests, attendants, scheduledDate, comments } = formValue;
+      const { theme, scheduledDate, comments } = formValue;
       setError("");
       const activity = {
         id: null,
@@ -49,15 +48,25 @@ export default function ProcessTalk(props) {
         planActivityId: params.planActivityId,
         status: 1,
         quantity: 1,
-        title: theme,
-        guests: guests,
-        attendants: attendants,
+        title:
+          params.category === 10
+            ? "Insepección"
+            : params.category === 15
+            ? "Auditoría"
+            : params.category === 16
+            ? "Análisis de riesgo"
+            : theme,
+        guests: 0,
+        attendants: 0,
         comments: comments,
         attachment: "",
-        scheduledDate: moment(scheduledDate).format(),
+        scheduledDate:
+          params.category !== 16
+            ? moment(scheduledDate).format()
+            : moment().format(),
       };
       // console.log(activity);
-      navigation.navigate("TalkTakePicture", {
+      navigation.navigate("ActivityTakePicture", {
         activity: activity,
         params: params,
         // refresh: params.refresh,
@@ -76,6 +85,7 @@ export default function ProcessTalk(props) {
   };
 
   const goToReschedule = () => {
+    // console.log("act", params);
     navigation.navigate("RescheduleActivityScreen", {
       planActivityId: params.planActivityId,
     });
@@ -104,59 +114,35 @@ export default function ProcessTalk(props) {
     >
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Tema */}
-        <View style={styles.formElement}>
-          <Text style={styles.formLabel}>Tema:</Text>
+        {params.category !== 10 &&
+          params.category !== 15 &&
+          params.category !== 16 && (
+            <View style={styles.formElement}>
+              <Text style={styles.formLabel}>Tema:</Text>
 
-          <TextInput
-            value={formik.values.theme}
-            autoCapitalize="none"
-            placeholder="Tema"
-            onChangeText={(text) => formik.setFieldValue("theme", text)}
-          />
-          <Text style={styles.error}>{formik.errors.theme}</Text>
-        </View>
-        {/* Total Convocados */}
-        <View style={styles.formElement}>
-          <Text style={styles.formLabel}>Total convocados:</Text>
-          <TextInput
-            value={formik.values.guests}
-            autoCapitalize="none"
-            placeholder="Nº convocados"
-            onChangeText={(text) => formik.setFieldValue("guests", text)}
-            keyboardType="number-pad"
-            rightContent={
-              <Ionicons name="people" size={20} color={COLORS.primary} />
-            }
-          />
-          <Text style={styles.error}>{formik.errors.guests}</Text>
-        </View>
-        {/* Total Asistentes */}
-        <View style={styles.formElement}>
-          <Text style={styles.formLabel}>Total asistentes:</Text>
-          <TextInput
-            value={formik.values.attendants}
-            autoCapitalize="none"
-            placeholder="Nº asistentes"
-            keyboardType="number-pad"
-            onChangeText={(text) => formik.setFieldValue("attendants", text)}
-            rightContent={
-              <Ionicons name="people" size={20} color={COLORS.primary} />
-            }
-          />
-          <Text style={styles.error}>{formik.errors.attendants}</Text>
-        </View>
+              <TextInput
+                value={formik.values.theme}
+                autoCapitalize="none"
+                placeholder="Tema"
+                onChangeText={(text) => formik.setFieldValue("theme", text)}
+              />
+              <Text style={styles.error}>{formik.errors.theme}</Text>
+            </View>
+          )}
         {/* Fecha */}
-        <View style={styles.formElement}>
-          <Text style={styles.formLabel}>Fecha:</Text>
-          <Section style={styles.dateFormElement}>
-            <SimplerDatePicker
-              onDatePicked={(date) =>
-                formik.setFieldValue("scheduledDate", date)
-              }
-            />
-          </Section>
-          <Text style={styles.error}>{formik.errors.scheduledDate}</Text>
-        </View>
+        {params.category !== 16 && (
+          <View style={styles.formElement}>
+            <Text style={styles.formLabel}>Fecha:</Text>
+            <Section style={styles.dateFormElement}>
+              <SimplerDatePicker
+                onDatePicked={(date) =>
+                  formik.setFieldValue("scheduledDate", date)
+                }
+              />
+            </Section>
+            <Text style={styles.error}>{formik.errors.scheduledDate}</Text>
+          </View>
+        )}
         {/* Comentarios */}
         <View style={styles.formElement}>
           <Text style={styles.formLabel}>Comentarios:</Text>
@@ -202,6 +188,7 @@ export default function ProcessTalk(props) {
           </View>
         </View>
         <Text style={styles.error}>{error}</Text>
+
         {loading ? (
           <ActivityIndicator
             size="large"
@@ -220,6 +207,7 @@ export default function ProcessTalk(props) {
                 }
               />
             </View>
+
             <Button
               text="Cancelar Actividad"
               color={COLORS.danger}
@@ -238,19 +226,21 @@ export default function ProcessTalk(props) {
 function initialValues() {
   return {
     theme: "",
-    guests: "",
-    attendants: "",
     scheduledDate: "",
     comments: "",
   };
 }
 
-function validationSchema() {
+function validationSchema(category) {
   return {
-    theme: Yup.string().required("El tema es obligatorio"),
-    guests: Yup.string().required("El total de convocados es obligatorio"),
-    attendants: Yup.string().required("El total de asistentes es obligatorio"),
-    scheduledDate: Yup.string().required("La fecha es obligatoria"),
+    theme:
+      category !== 10 && category !== 15 && category !== 16
+        ? Yup.string().required("El tema es obligatorio")
+        : Yup.string().optional(),
+    scheduledDate:
+      category !== 16
+        ? Yup.string().required("La fecha es obligatoria")
+        : Yup.string().optional(),
   };
 }
 const styles = StyleSheet.create({
@@ -270,7 +260,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   formButtons: {
-    marginVertical: 12,
+    marginTop: "auto",
     flexDirection: "row",
     justifyContent: "space-between",
   },

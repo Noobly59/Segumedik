@@ -1,41 +1,45 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
+import useAuth from "../hooks/useAuth";
 import {
   View,
   StyleSheet,
   Image,
   AppState,
   TouchableOpacity,
-  SafeAreaView,
   ActivityIndicator,
 } from "react-native";
-import { themeColor, Button, Text, TextInput } from "react-native-rapi-ui";
+import { Button } from "react-native-rapi-ui";
 import { Ionicons } from "@expo/vector-icons";
 import { Camera } from "expo-camera";
-import { manipulateAsync } from "expo-image-manipulator";
-import { editSubCondition } from "../api/substandardConditions";
-import { useFormik } from "formik";
-import useAuth from "../hooks/useAuth";
+import { completeActivity } from "../api/securityAnnualPlans";
 import { COLORS, IMAGE_SIZE, IMAGE_QUALITY } from "../utils/constants";
+import { manipulateAsync } from "expo-image-manipulator";
 
-export default function AddClosingPicture(props) {
+export default function ActivityTakePicture(props) {
+  //AUTH
+  const { auth } = useAuth();
+
+  //NAVEGACION
+  const navigation = useNavigation();
   const {
     route: { params },
   } = props;
-  // console.log(params.id);
+
+  //CAMARA
   const appState = useRef(AppState.currentState);
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
-  const navigation = useNavigation();
   const [toggleCamera, setToggleCamera] = useState(false);
   const cameraRef = useRef(null);
   const [hasPermission, setHasPermission] = useState(null);
   const [pictureTaken, setPictureTaken] = useState(false);
   const [imageUri, setImageUri] = useState(null);
+
+  //VARIOS
   const [orientation, setOrientation] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const { auth } = useAuth();
-
+  //CAMARA
   useEffect(() => {
     AppState.addEventListener("change", _handleAppStateChange);
 
@@ -48,6 +52,7 @@ export default function AddClosingPicture(props) {
     appState.current = nextAppState;
     setAppStateVisible(appState.current);
   };
+
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
@@ -55,43 +60,13 @@ export default function AddClosingPicture(props) {
     })();
   }, []);
 
+  //ACTIVAR CAMARA
   const toggle = () => {
     setToggleCamera(!toggleCamera);
     setPictureTaken(!pictureTaken);
   };
-  const formik = useFormik({
-    initialValues: initialValues(),
-    validateOnChange: false,
-    onSubmit: async (formValue) => {
-      const { recommendation } = formValue;
-      setLoading(true);
-      try {
-        if (toggleCamera) {
-          const closing = {
-            recommendation: recommendation,
-            closedBy: auth[0].userName,
-            closingOrientation: orientation ? orientation : 1,
-          };
-          let formData = new FormData();
-          formData.append("file", {
-            uri: imageUri,
-            name: "closing.jpg",
-            type: "image/jpg",
-          });
-          formData.append("closing", {
-            string: JSON.stringify(closing),
-            type: "application/json",
-          });
-          console.log(formData);
-          const response = await editSubCondition(params.id, formData);
-          navigation.navigate("SubConDetail", response);
-        }
-      } catch (error) {
-        setLoading(false);
-        console.log(error);
-      }
-    },
-  });
+
+  //TOMAR FOTO
   const takePicture = async () => {
     if (cameraRef) {
       try {
@@ -106,47 +81,59 @@ export default function AddClosingPicture(props) {
     }
   };
 
+  //ROTACION
   const rotateRight = async () => {
     const picture = await manipulateAsync(imageUri, [{ rotate: 90 }]);
     picture.width > picture.height ? setOrientation(2) : setOrientation(1);
     setImageUri(picture.uri);
-    // console.log(orientation);
   };
   const rotateLeft = async () => {
     const picture = await manipulateAsync(imageUri, [{ rotate: -90 }]);
     picture.width > picture.height ? setOrientation(2) : setOrientation(1);
     setImageUri(picture.uri);
-    // console.log(orientation);
+  };
+
+  //SUBIR ACTIVIDAD
+  const uploadActivity = async () => {
+    setLoading(true);
+    try {
+      if (toggleCamera) {
+        const activity = params.activity;
+        let formData = new FormData();
+        formData.append("file", {
+          uri: imageUri,
+          name: "detection.jpg",
+          type: "image/jpg",
+        });
+        formData.append("activity", {
+          string: JSON.stringify(activity),
+          type: "application/json",
+        });
+        // console.log(activity);
+        const response = await completeActivity(formData, auth[0].userName);
+        setLoading(false);
+        navigation.navigate("SecAnnPlanProcessActivities", {
+          refresh: Math.random(),
+        });
+      }
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      {pictureTaken ? (
-        <View style={styles.formElement}>
-          <Text style={styles.formLabel}>Recomendación:</Text>
-
-          <TextInput
-            value={formik.values.recommendation}
-            autoCapitalize="none"
-            placeholder="Recomendación"
-            onChangeText={(text) =>
-              formik.setFieldValue("recommendation", text)
-            }
-          />
-        </View>
-      ) : (
-        <></>
-      )}
+    <View style={styles.container}>
       <View style={styles.pictureContainer}>
         {toggleCamera ? (
           <Image
             source={{ uri: imageUri }}
             resizeMode="contain"
             style={{
-              width: "85%",
-              height: "85%",
+              width: "90%",
+              height: "90%",
               alignSelf: "center",
-              top: -2,
+              top: 7,
             }}
           />
         ) : appStateVisible === "background" ? (
@@ -165,59 +152,58 @@ export default function AddClosingPicture(props) {
         )}
       </View>
       <View style={{ marginTop: "auto" }}>
-        <View>
-          {pictureTaken ? (
-            <View style={{ marginTop: "auto" }}>
-              <View style={styles.rotateButtons}>
-                <TouchableOpacity
-                  style={styles.rotate}
-                  activeOpacity={0.5}
-                  onPress={rotateLeft}
-                >
-                  <Ionicons
-                    name="arrow-undo-circle"
-                    size={30}
-                    color={COLORS.white}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.rotate}
-                  activeOpacity={0.5}
-                  onPress={rotateRight}
-                >
-                  <Ionicons
-                    name="arrow-redo-circle"
-                    size={30}
-                    color={COLORS.white}
-                  />
-                </TouchableOpacity>
-              </View>
-              <View>
-                <Button
-                  text="Tomar Otra"
-                  type="TouchableOpacity"
-                  color={COLORS.primary}
-                  onPress={toggle}
-                  leftContent={
-                    <Ionicons name="camera" size={30} color={COLORS.white} />
-                  }
+        {pictureTaken ? (
+          <>
+            <View style={styles.rotateButtons}>
+              <TouchableOpacity
+                style={styles.rotate}
+                activeOpacity={0.5}
+                onPress={rotateLeft}
+              >
+                <Ionicons
+                  name="arrow-undo-circle"
+                  size={30}
+                  color={COLORS.white}
                 />
-              </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.rotate}
+                activeOpacity={0.5}
+                onPress={rotateRight}
+              >
+                <Ionicons
+                  name="arrow-redo-circle"
+                  size={30}
+                  color={COLORS.white}
+                />
+              </TouchableOpacity>
             </View>
-          ) : (
-            <View>
+
+            <View style={{ marginBottom: 20 }}>
               <Button
-                text="Tomar Foto"
+                text="Tomar Otra"
                 type="TouchableOpacity"
                 color={COLORS.primary}
-                onPress={takePicture}
-                rightContent={
+                onPress={toggle}
+                leftContent={
                   <Ionicons name="camera" size={30} color={COLORS.white} />
                 }
               />
             </View>
-          )}
-        </View>
+          </>
+        ) : (
+          <View>
+            <Button
+              text="Tomar Foto"
+              type="TouchableOpacity"
+              color={COLORS.primary}
+              onPress={takePicture}
+              rightContent={
+                <Ionicons name="camera" size={30} color={COLORS.white} />
+              }
+            />
+          </View>
+        )}
       </View>
 
       <View style={styles.formButtons}>
@@ -248,8 +234,8 @@ export default function AddClosingPicture(props) {
               <Button
                 text="Guardar"
                 type="TouchableOpacity"
-                onPress={formik.handleSubmit}
-                // onPress={uploadCondition}
+                // onPress={formik.handleSubmit}
+                onPress={uploadActivity}
                 color={COLORS.primary}
                 rightContent={
                   <Ionicons
@@ -265,15 +251,10 @@ export default function AddClosingPicture(props) {
           <></>
         )}
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
-function initialValues() {
-  return {
-    recommendation: "",
-  };
-}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -282,16 +263,9 @@ const styles = StyleSheet.create({
   },
   pictureContainer: {},
   formButtons: {
-    // marginTop: "auto",
     marginVertical: 7,
     flexDirection: "row",
     justifyContent: "space-between",
-  },
-  formElement: {
-    marginVertical: 7,
-  },
-  formLabel: {
-    marginBottom: 3,
   },
   rotateButtons: {
     flexDirection: "row",

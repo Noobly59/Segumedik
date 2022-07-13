@@ -9,6 +9,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import moment from "moment";
+import { COLORS } from "../../utils/constants";
 
 export default function HomeWeeklyActItem(props) {
   const { menuItemName } = props;
@@ -31,17 +32,21 @@ export default function HomeWeeklyActItem(props) {
             alignItems: "center",
           }}
         >
-          <Ionicons name={`logo-tux`} size={30} color={themeColor.black} />
+          <Ionicons
+            name={`${menuItemName.relatedIcon}`}
+            size={30}
+            color={COLORS.primary}
+          />
 
           <View style={{ flex: 1 }}>
             <Text numberOfLines={1} style={styles.title}>
-              {menuItemName["activity"].name}
+              {menuItemName.name}
             </Text>
           </View>
           <View>
             <Text style={styles.date}>
-              {menuItemName["activityDate"]
-                ? moment(menuItemName["activityDate"]).format("L")
+              {menuItemName.activityDate
+                ? moment(menuItemName.activityDate).format("L")
                 : ""}
             </Text>
           </View>

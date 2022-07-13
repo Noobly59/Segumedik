@@ -146,7 +146,7 @@ export default function AddSubConTakePicture(props) {
           ></Camera>
         )}
       </View>
-      <View style={{ top: -90 }}>
+      <View style={{ marginTop: "auto" }}>
         {pictureTaken ? (
           <>
             <View style={styles.rotateButtons}>
@@ -258,7 +258,8 @@ const styles = StyleSheet.create({
   },
   pictureContainer: {},
   formButtons: {
-    marginTop: "auto",
+    // marginTop: "auto",
+    marginVertical: 7,
     flexDirection: "row",
     justifyContent: "space-between",
   },

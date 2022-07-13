@@ -27,7 +27,7 @@ export default function HomeWeeklyActivties(props) {
 const styles = StyleSheet.create({
   weeklyActivities: {
     paddingHorizontal: 12,
-    marginTop: 15,
+    marginTop: 7,
     flex: 1,
   },
   monthlyCounter: {

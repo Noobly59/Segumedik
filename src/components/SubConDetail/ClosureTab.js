@@ -46,7 +46,9 @@ export default function ClosureTab(props) {
       setClosingDate(response[0].closingDate);
       url
         ? setClosingEvidenceUrl(
-            url.charAt(0) !== "h" ? `http://sso.segumedik.com/${url}` : `${url}`
+            url.charAt(0) !== "h"
+              ? `http://sso.segumedik.com/${response[0].closingEvidence}`
+              : `${response[0].closingEvidence}`
           )
         : setClosingEvidenceUrl(null);
     } catch (error) {
@@ -60,7 +62,7 @@ export default function ClosureTab(props) {
 
   const verifyImageExistance = async () => {
     try {
-      const response = await fetch(url);
+      const response = await fetch(closingEvidenceUrl);
       await response.formData();
       setImageExists(true);
     } catch (error) {

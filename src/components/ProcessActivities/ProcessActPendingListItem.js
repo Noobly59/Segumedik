@@ -9,23 +9,33 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import moment from "moment";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import { COLORS } from "../../utils/constants";
 
 export default function ProcessActPendingListItem(props) {
   const { activity, reportId } = props;
   const navigation = useNavigation();
 
+  // console.log(activity);
+
   const goToProcess = () => {
-    switch (activity["activity"].category) {
-      case 7:
-        navigation.navigate("ProcessTalk", {
-          planActivityId: activity["planActivityId"],
-          reportId: reportId,
-        });
+    switch (activity.category) {
+      case 9:
         break;
       case 11:
         navigation.navigate("ProcessTalk", {
-          planActivityId: activity["planActivityId"],
-          reportId: reportId,
+          planActivityId: activity.id,
+          reportId: reportId.reportId,
+          planId: reportId.planId,
+          month: reportId.month,
+        });
+        break;
+      default:
+        navigation.navigate("ProcessActivities", {
+          planActivityId: activity.id,
+          reportId: reportId.reportId,
+          planId: reportId.planId,
+          month: reportId.month,
+          category: activity.category,
         });
         break;
     }
@@ -36,6 +46,7 @@ export default function ProcessActPendingListItem(props) {
       L: "DD/MM/YYYY",
     },
   });
+
   return (
     <TouchableWithoutFeedback
       style={styles.weeklyActivities}
@@ -49,19 +60,26 @@ export default function ProcessActPendingListItem(props) {
             alignItems: "center",
           }}
         >
-          <Ionicons name={`logo-tux`} size={20} color={themeColor.black} />
+          <Ionicons
+            name={`${activity.relatedIcon}`}
+            size={20}
+            color={COLORS.primary}
+          />
 
-          <View style={{ flex: 1 }}>
+          <View style={{ flex: 1, marginLeft: 6 }}>
             <Text numberOfLines={1} style={styles.title}>
-              {activity["activity"].name.charAt(0).toUpperCase() +
-                activity["activity"].name.slice(1).toLowerCase()}
+              {activity.name.charAt(0).toUpperCase() +
+                activity.name.slice(1).toLowerCase()}
             </Text>
           </View>
+          {/* <View>
+            <Text numberOfLines={1} style={styles.title} status="danger">
+              {activity.category}
+            </Text>
+          </View> */}
           <View>
             <Text style={styles.dates}>
-              {activity["activityDate"]
-                ? moment(activity["activityDate"]).format("L")
-                : ""}
+              {activity.scheduledDate ? activity.scheduledDate : ""}
             </Text>
           </View>
         </SectionContent>

@@ -28,6 +28,7 @@ export default function SubConListItem(props) {
     }
     return color;
   };
+
   const termText = (num) => {
     var term = "";
     switch (num) {

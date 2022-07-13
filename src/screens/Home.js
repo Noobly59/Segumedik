@@ -23,8 +23,8 @@ export default function Home() {
   const loadActivities = async () => {
     try {
       const response = await getMonthActivities(auth[0].headquarterId);
-      setActivties(response ? response["activities"] : []);
-      setCount(response ? response["count"] : 0);
+      setActivties(response.activities);
+      setCount(response.count);
       setLoading(false);
       // console.log(response);
     } catch (error) {

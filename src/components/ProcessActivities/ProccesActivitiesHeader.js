@@ -8,14 +8,24 @@ import {
 } from "react-native-gesture-handler";
 import { COLORS } from "../../utils/constants";
 
-export default function ProccesActivitiesHeader() {
+export default function ProccesActivitiesHeader(props) {
+  const navigation = useNavigation();
+  const { planId } = props;
+
+  const goToActivitiesList = () => {
+    navigation.navigate("AddActivities", {
+      planId: planId,
+      // refresh: refresh,
+    });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.searchStyle}>
         <Text style={styles.listTitle}>Pendientes</Text>
       </View>
       <View style={styles.addStyle}>
-        <TouchableOpacity style={styles.addButton}>
+        <TouchableOpacity style={styles.addButton} onPress={goToActivitiesList}>
           <Ionicons name="add-circle" size={20} color={COLORS.white} />
         </TouchableOpacity>
       </View>

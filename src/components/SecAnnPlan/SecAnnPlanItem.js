@@ -8,60 +8,25 @@ import { getPlanCompliance } from "../../api/securityAnnualPlans";
 
 export default function SecAnnPlanItem(props) {
   const { secAnnPlanDetail } = props;
-  const [compliance, setCompliance] = useState(0);
-  const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
   const goToDetail = () => {
     navigation.navigate("SecAnnPlanDetail", secAnnPlanDetail);
   };
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await getPlanCompliance(
-          secAnnPlanDetail["annualPlan"]?.id
-        );
-        setCompliance(response[0] ? response[0] : 0);
-        console.log(compliance);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
-  // console.log(secAnnPlanDetail);
   return (
     <TouchableWithoutFeedback onPress={goToDetail}>
       <Section style={styles.itemContainer}>
         <View style={styles.container}>
-          {/* <View style={styles.headquarters}>
-            <Text style={styles.title}>GYE</Text>
-          </View> */}
           <View style={styles.conditionInfo}>
             <View style={styles.infoText}>
               <View>
-                {/* <Text style={styles.secAnnPlanDetail}>
-                  Empresa para pruebas
-                </Text> */}
                 <Text style={styles.secAnnPlanDetail} numberOfLines={1}>
-                  {`${secAnnPlanDetail["annualPlan"].name}`}
+                  {secAnnPlanDetail["annualPlan"]?.name != ""
+                    ? secAnnPlanDetail["annualPlan"]?.name
+                    : `Cronograma de actividades ${secAnnPlanDetail["annualPlan"]?.year}`}
                 </Text>
               </View>
-              {loading ? (
-                <ActivityIndicator
-                  size="large"
-                  style={styles.spinner}
-                  color={COLORS.primary}
-                />
-              ) : (
-                <View>
-                  <Text style={styles.secAnnPlanDetail} status="warning">
-                    {`${Math.trunc(compliance)}%`}
-                  </Text>
-                </View>
-              )}
             </View>
-
             <Text style={styles.secAnnPlanDetail}>
               {`${secAnnPlanDetail["collaborator"]?.firstName} ${secAnnPlanDetail["collaborator"]?.lastName}`}
             </Text>
