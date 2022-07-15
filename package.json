@@ -10,7 +10,6 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@cawfree/react-native-simpler-date-picker": "^0.1.0-alpha.4",
     "@expo/vector-icons": "^13.0.0",
     "@react-native-community/datetimepicker": "6.1.2",
     "@react-native-picker/picker": "^2.4.2",

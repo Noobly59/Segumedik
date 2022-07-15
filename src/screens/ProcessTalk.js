@@ -20,10 +20,11 @@ import * as Yup from "yup";
 import { Ionicons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import moment from "moment";
-import SimplerDatePicker from "@cawfree/react-native-simpler-date-picker";
+// import SimplerDatePicker from "@cawfree/react-native-simpler-date-picker";
 import useAuth from "../hooks/useAuth";
 import { COLORS } from "../utils/constants";
 import { cancelReportActivity } from "../api/securityAnnualPlans";
+import DatePicker from "../components/DatePicker/DatePicker";
 
 export default function ProcessTalk(props) {
   const navigation = useNavigation();
@@ -148,13 +149,17 @@ export default function ProcessTalk(props) {
         {/* Fecha */}
         <View style={styles.formElement}>
           <Text style={styles.formLabel}>Fecha:</Text>
-          <Section style={styles.dateFormElement}>
+          {/* <Section style={styles.dateFormElement}>
             <SimplerDatePicker
               onDatePicked={(date) =>
                 formik.setFieldValue("scheduledDate", date)
               }
             />
-          </Section>
+          </Section> */}
+          <DatePicker
+            setDate={formik.setFieldValue}
+            formikValue={"scheduledDate"}
+          />
           <Text style={styles.error}>{formik.errors.scheduledDate}</Text>
         </View>
         {/* Comentarios */}

@@ -19,10 +19,10 @@ import * as Yup from "yup";
 import { Ionicons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import moment from "moment";
-import SimplerDatePicker from "@cawfree/react-native-simpler-date-picker";
 import useAuth from "../hooks/useAuth";
 import { COLORS } from "../utils/constants";
 import { reschedulePlanActivity } from "../api/securityAnnualPlans";
+import DatePicker from "../components/DatePicker/DatePicker";
 
 export default function RescheduleActivityScreen(props) {
   const navigation = useNavigation();
@@ -95,7 +95,7 @@ export default function RescheduleActivityScreen(props) {
         </View>
         <View style={styles.formElement}>
           <Text style={styles.formLabel}>Fecha:</Text>
-          <Section style={styles.dateFormElement}>
+          {/* <Section style={styles.dateFormElement}>
             <SimplerDatePicker
               minDate={moment(
                 params.planYear + "-" + "01-01",
@@ -109,7 +109,15 @@ export default function RescheduleActivityScreen(props) {
                 formik.setFieldValue("rescheduledDate", date)
               }
             />
-          </Section>
+          </Section> */}
+          <DatePicker
+            setDate={formik.setFieldValue}
+            formikValue={"rescheduledDate"}
+            minDate={moment(params.planYear + "-01-01", "YYYY-MM-DD")}
+            maxDate={moment(params.planYear + "-12-31", "YYYY-MM-DD").endOf(
+              "month"
+            )}
+          />
           <Text style={styles.error}>{formik.errors.rescheduledDate}</Text>
         </View>
         <View style={styles.formButtons}>

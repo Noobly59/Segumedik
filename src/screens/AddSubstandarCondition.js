@@ -14,9 +14,9 @@ import * as Yup from "yup";
 import { Ionicons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import moment from "moment";
-import SimplerDatePicker from "@cawfree/react-native-simpler-date-picker";
 import useAuth from "../hooks/useAuth";
 import { COLORS } from "../utils/constants";
+import DatePicker from "../components/DatePicker/DatePicker";
 
 export default function AddSubstandarCondition() {
   const navigation = useNavigation();
@@ -109,13 +109,18 @@ export default function AddSubstandarCondition() {
         </View>
         <View style={styles.formElement}>
           <Text style={styles.formLabel}>Fecha de detección:</Text>
-          <Section style={styles.dateFormElement}>
+          <DatePicker
+            setDate={formik.setFieldValue}
+            formikValue={"detectionDate"}
+          />
+
+          {/* <Section style={styles.dateFormElement}>
             <SimplerDatePicker
               onDatePicked={(date) =>
                 formik.setFieldValue("detectionDate", date)
               }
             />
-          </Section>
+          </Section> */}
           {/* <TextInput
             value={formik.values.detectionDate}
             autoCapitalize="none"

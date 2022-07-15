@@ -7,10 +7,17 @@ import { Ionicons } from "@expo/vector-icons";
 import useAuth from "../hooks/useAuth";
 import { getUser } from "../api/user";
 import { COLORS } from "../utils/constants";
+import DatePicker from "../components/DatePicker/DatePicker";
+import moment from "moment";
 
 export default function Login() {
   const [error, setError] = useState("");
+  const [date, setDate] = useState();
   const { login } = useAuth();
+
+  useEffect(() => {
+    console.log(date);
+  }, [date]);
 
   const getUserByUserName = async (username) => {
     try {
@@ -40,6 +47,7 @@ export default function Login() {
             name: "",
           },
         ];
+        console.log("asdf");
         login(user);
       } else {
         setError("El usuario no existe");
@@ -86,6 +94,13 @@ export default function Login() {
       <Text style={styles.error}>{formik.errors.username}</Text>
       <Text style={styles.error}>{formik.errors.password}</Text>
       <Text style={styles.error}>{error}</Text>
+      <View style={{ paddingHorizontal: 4, flex: 1 }}>
+        {/* <DatePicker
+          setDate={setDate}
+          minDate={"2012-07-02"}
+          maxDate={"2022-01-15"}
+        /> */}
+      </View>
     </>
   );
 }
