@@ -30,7 +30,7 @@ export default function AccidentsListItem(props) {
     return color;
   };
 
-  moment.updateLocale("es", {
+  moment.updateLocale("en", {
     longDateFormat: {
       L: "DD/MM/YYYY",
     },

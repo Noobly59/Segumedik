@@ -11,7 +11,7 @@ import moment from "moment";
 
 export default function SecAnnPlanDetHeader(props) {
   const { title, responsible, startDate } = props;
-  moment.updateLocale("es", {
+  moment.updateLocale("en", {
     longDateFormat: {
       L: "DD/MM/YYYY",
     },

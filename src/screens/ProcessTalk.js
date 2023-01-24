@@ -42,7 +42,7 @@ export default function ProcessTalk(props) {
     validationSchema: Yup.object(validationSchema()),
     validateOnChange: false,
     onSubmit: (formValue) => {
-      const { theme, guests, attendants, scheduledDate, comments } = formValue;
+      const { guests, attendants, scheduledDate, comments } = formValue;
       setError("");
       const activity = {
         id: null,
@@ -50,7 +50,7 @@ export default function ProcessTalk(props) {
         planActivityId: params.planActivityId,
         status: 1,
         quantity: 1,
-        title: theme,
+        title: "Charla",
         guests: guests,
         attendants: attendants,
         comments: comments,
@@ -88,7 +88,7 @@ export default function ProcessTalk(props) {
     });
   };
 
-  moment.updateLocale("es", {
+  moment.updateLocale("en", {
     months:
       "Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre".split(
         "_"
@@ -104,18 +104,6 @@ export default function ProcessTalk(props) {
       enabled
     >
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* Tema */}
-        <View style={styles.formElement}>
-          <Text style={styles.formLabel}>Tema:</Text>
-
-          <TextInput
-            value={formik.values.theme}
-            autoCapitalize="none"
-            placeholder="Tema"
-            onChangeText={(text) => formik.setFieldValue("theme", text)}
-          />
-          <Text style={styles.error}>{formik.errors.theme}</Text>
-        </View>
         {/* Total Convocados */}
         <View style={styles.formElement}>
           <Text style={styles.formLabel}>Total convocados:</Text>
@@ -242,7 +230,6 @@ export default function ProcessTalk(props) {
 
 function initialValues() {
   return {
-    theme: "",
     guests: "",
     attendants: "",
     scheduledDate: "",
@@ -252,7 +239,6 @@ function initialValues() {
 
 function validationSchema() {
   return {
-    theme: Yup.string().required("El tema es obligatorio"),
     guests: Yup.string().required("El total de convocados es obligatorio"),
     attendants: Yup.string().required("El total de asistentes es obligatorio"),
     scheduledDate: Yup.string().required("La fecha es obligatoria"),

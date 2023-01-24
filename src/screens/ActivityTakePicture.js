@@ -109,7 +109,7 @@ export default function ActivityTakePicture(props) {
           string: JSON.stringify(activity),
           type: "application/json",
         });
-        // console.log(activity);
+        // console.log(formData);
         const response = await completeActivity(formData, auth[0].userName);
         setLoading(false);
         navigation.navigate("SecAnnPlanProcessActivities", {

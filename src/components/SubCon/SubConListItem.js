@@ -72,7 +72,7 @@ export default function SubConListItem(props) {
     return term;
   };
 
-  moment.updateLocale("es", {
+  moment.updateLocale("en", {
     longDateFormat: {
       L: "DD/MM/YYYY",
     },

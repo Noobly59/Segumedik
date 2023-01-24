@@ -12,7 +12,7 @@ import { COLORS } from "../../utils/constants";
 export default function ProcessActProcessedListItem(props) {
   const { activity } = props;
   // console.log(activity);
-  moment.updateLocale("es", {
+  moment.updateLocale("en", {
     longDateFormat: {
       L: "DD/MM/YYYY",
     },

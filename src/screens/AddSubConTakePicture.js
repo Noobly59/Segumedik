@@ -34,7 +34,7 @@ export default function AddSubConTakePicture(props) {
     AppState.addEventListener("change", _handleAppStateChange);
 
     return () => {
-      AppState.removeEventListener("change", _handleAppStateChange);
+      AppState.remove("change", _handleAppStateChange);
     };
   }, []);
 

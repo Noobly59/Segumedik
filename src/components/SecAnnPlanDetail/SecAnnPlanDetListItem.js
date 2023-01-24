@@ -48,6 +48,7 @@ export default function SecAnnPlanDetListItem(props) {
         annualPlanId: planId,
         status: 0,
       };
+
       const response = await createReport(report);
       monthItem.reportId = response.reportId;
       monthItem.reportDate = response.reportDate;
@@ -91,7 +92,7 @@ export default function SecAnnPlanDetListItem(props) {
     }
     return color;
   };
-  moment.updateLocale("es", {
+  moment.updateLocale("en", {
     months:
       "Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre".split(
         "_"

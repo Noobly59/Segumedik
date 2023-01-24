@@ -2,7 +2,7 @@
   "expo": {
     "name": "SeguApp",
     "slug": "SeguApp",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -23,11 +23,26 @@
       "package": "com.segumedik.security",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#EEEEEE"
       }
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "segumedik",
+            "project": "seguapp",
+            "authToken": "83dde2b09a5f49bcb479d24b945233edfb29df04d23e4af4ab3b03c025b4a94f"
+          }
+        }
+      ]
+    },
+    "plugins": [
+      "sentry-expo"
+    ]
   }
 }

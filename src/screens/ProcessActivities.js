@@ -29,7 +29,6 @@ export default function ProcessActivities(props) {
   const navigation = useNavigation();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { auth } = useAuth();
 
   const {
     route: { params },
@@ -40,7 +39,7 @@ export default function ProcessActivities(props) {
     validationSchema: Yup.object(validationSchema(params.category)),
     validateOnChange: false,
     onSubmit: (formValue) => {
-      const { theme, scheduledDate, comments } = formValue;
+      const { scheduledDate, comments } = formValue;
       setError("");
       const activity = {
         id: null,
@@ -50,12 +49,12 @@ export default function ProcessActivities(props) {
         quantity: 1,
         title:
           params.category === 10
-            ? "Insepección"
+            ? "Inspección"
             : params.category === 15
             ? "Auditoría"
             : params.category === 16
             ? "Análisis de riesgo"
-            : theme,
+            : "Otros",
         guests: 0,
         attendants: 0,
         comments: comments,
@@ -65,11 +64,9 @@ export default function ProcessActivities(props) {
             ? moment(scheduledDate).format()
             : moment().format(),
       };
-      // console.log(activity);
       navigation.navigate("ActivityTakePicture", {
         activity: activity,
         params: params,
-        // refresh: params.refresh,
       });
     },
   });
@@ -97,7 +94,7 @@ export default function ProcessActivities(props) {
     });
   };
 
-  moment.updateLocale("es", {
+  moment.updateLocale("en", {
     months:
       "Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre".split(
         "_"
@@ -113,33 +110,10 @@ export default function ProcessActivities(props) {
       enabled
     >
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* Tema */}
-        {params.category !== 10 &&
-          params.category !== 15 &&
-          params.category !== 16 && (
-            <View style={styles.formElement}>
-              <Text style={styles.formLabel}>Tema:</Text>
-
-              <TextInput
-                value={formik.values.theme}
-                autoCapitalize="none"
-                placeholder="Tema"
-                onChangeText={(text) => formik.setFieldValue("theme", text)}
-              />
-              <Text style={styles.error}>{formik.errors.theme}</Text>
-            </View>
-          )}
         {/* Fecha */}
         {params.category !== 16 && (
           <View style={styles.formElement}>
             <Text style={styles.formLabel}>Fecha:</Text>
-            {/* <Section style={styles.dateFormElement}>
-              <SimplerDatePicker
-                onDatePicked={(date) =>
-                  formik.setFieldValue("scheduledDate", date)
-                }
-              />
-            </Section> */}
             <DatePicker
               setDate={formik.setFieldValue}
               formikValue={"scheduledDate"}
@@ -147,6 +121,7 @@ export default function ProcessActivities(props) {
             <Text style={styles.error}>{formik.errors.scheduledDate}</Text>
           </View>
         )}
+
         {/* Comentarios */}
         <View style={styles.formElement}>
           <Text style={styles.formLabel}>Comentarios:</Text>
@@ -229,7 +204,6 @@ export default function ProcessActivities(props) {
 
 function initialValues() {
   return {
-    theme: "",
     scheduledDate: "",
     comments: "",
   };
@@ -237,10 +211,6 @@ function initialValues() {
 
 function validationSchema(category) {
   return {
-    theme:
-      category !== 10 && category !== 15 && category !== 16
-        ? Yup.string().required("El tema es obligatorio")
-        : Yup.string().optional(),
     scheduledDate:
       category !== 16
         ? Yup.string().required("La fecha es obligatoria")

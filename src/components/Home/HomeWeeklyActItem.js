@@ -17,7 +17,7 @@ export default function HomeWeeklyActItem(props) {
   const goToSecAnnPlan = () => {
     navigation.navigate("SecAnnPlanNavigation");
   };
-  moment.updateLocale("es", {
+  moment.updateLocale("en", {
     longDateFormat: {
       L: "DD/MM/YYYY",
     },

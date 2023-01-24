@@ -8,7 +8,7 @@ export default function SubConDetail(props) {
   const {
     route: { params },
   } = props;
-  console.log(params.closingEvidence);
+  console.log(params);
   return (
     <>
       <SubConDetHeader

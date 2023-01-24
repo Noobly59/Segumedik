@@ -8,6 +8,7 @@ import AddActivities from "../screens/AddActivities";
 import AddActivity from "../screens/AddActivity";
 import RescheduleActivityScreen from "../screens/RescheduleActivityScreen";
 import Accidents from "../screens/Accidents";
+import ProcessSpecialActivities from "../screens/ProcessSpecialActivities";
 
 const Stack = createNativeStackNavigator();
 
@@ -88,6 +89,14 @@ export default function ProcessActivityNavigation(props) {
           month: params.month,
           reportId: params.reportId,
           planId: params.planId,
+        }}
+      />
+      <Stack.Screen
+        name="ProcessSpecialActivities"
+        component={ProcessSpecialActivities}
+        options={{ title: "", headerShown: false }}
+        initialParams={{
+          refresh: 0,
         }}
       />
     </Stack.Navigator>

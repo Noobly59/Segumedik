@@ -93,7 +93,7 @@ export async function completeActivity(activity, username) {
       body: activity,
     });
     const result = await response.json();
-    console.log(result);
+    // console.log(result);
     return result;
   } catch (error) {
     throw error;
@@ -142,7 +142,6 @@ export async function addAccidents(processAccidentActivity) {
 
 export async function addUnplannedPlanActivity(activity) {
   try {
-    console.log(activity);
     const url = `${API_HOST}/api/AnnualPlans/ScheduleActivity/`;
     const response = await fetch(url, {
       method: "POST",
@@ -211,6 +210,24 @@ export async function reschedulePlanActivity(
     });
     const result = await response.json();
     return result;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function completeSpecialActivity(activity, _callback) {
+  try {
+    const url = `${API_HOST}/api/AnnualPlans/ProcessSpecialActivity/`;
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(activity),
+    });
+    const result = await response.json();
+    // console.log(result);
+    _callback();
   } catch (error) {
     throw error;
   }
